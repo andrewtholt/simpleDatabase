@@ -167,10 +167,10 @@ int flags
 
 	FIXED 	Fixed length records.
 
-	DUPLICATE 2	Allow records with duplicate keys.
+	DUPLICATE Allow records with duplicate keys.
 
 	FIXED_DB_SIZE Database will grow until full.
-	No additional space will automatically be allocated.
+	No additional space will be, automatically, allocated.
 
 	NEVER_SHRINK As records are deleted the space the occupy is returned to
 	the free list.  If not set then the memory is free'd.

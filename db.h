@@ -1,8 +1,7 @@
 #include <sys/types.h>
 #include <time.h>
 
-struct nlist
-{
+struct nlist {
   char *name;
   char *def;
   int bucket_number;
@@ -13,8 +12,7 @@ struct nlist
 
 
 
-struct hash_entry
-{
+struct hash_entry {
   struct nlist *hash_head;
   int ref_count;
   int rec_count;
@@ -29,8 +27,7 @@ struct hash_entry
 #define STAMP 16
 #define MATCH 32 /* find must be a perfect match */
 
-struct database
-{
+struct database {
   struct hash_entry **hash_table;
   int hashsize;
   unsigned int flags;
@@ -58,8 +55,9 @@ Delete
 So here are mine */
 
 /* Create & update */
+struct database *db_create();
+struct nlist *db_install( char *name, char *def, struct database *db);
 struct nlist *install();
-void db_update();
 /* Retrieve */
 struct nlist *find_first();
 struct nlist *find_next();
@@ -72,7 +70,8 @@ struct nlist   *find_first_def();
 void delete();
 
 /* Utilities */
-struct database *db_create();
+// Update
+void db_update();
 void db_setattr();
 void db_dump();
 void debug_dump();
