@@ -1,0 +1,236 @@
+#include <sys/types.h>
+#include <time.h>
+
+struct nlist
+{
+  char *name;
+  char *def;
+  int bucket_number;
+  time_t updateTime;
+  struct nlist *next;
+  struct nlist *prev;
+};
+
+
+
+struct hash_entry
+{
+  struct nlist *hash_head;
+  int ref_count;
+  int rec_count;
+};
+
+/* Database properties held in flags */
+
+#define FIXED 1
+#define DUPLICATE 2
+#define FIXED_DB_SIZE 4
+#define NEVER_SHRINK 8
+#define STAMP 16
+#define MATCH 32
+
+struct database
+{
+  struct hash_entry **hash_table;
+  int hashsize;
+  unsigned int flags;
+  struct nlist *free_rec_list;
+  int free_rec_count;
+  int max_num_records;	/* only has meaning if FIXED_DB_SIZE set */
+  int name_size;
+  int def_size;
+  int alarm_level;	/* % at which database is nearly full */
+};
+
+#define MAX_REC_SIZE 1024
+char scratch_buffer[MAX_REC_SIZE];
+
+#define FREE -1
+#define IN_USE 0
+/*
+All databases have four basic functions :-
+
+Create
+Retrieve
+Update
+Delete
+
+So here are mine */
+
+/* Create & update */
+----------------------------------------------------------------------------
+struct nlist *db_install(char *name,char *def, struct database *db)
+
+char *name
+	Record name, or key.
+
+char *def
+	Contents of record.
+
+struct database *db
+	Database handle.
+
+Description
+
+	Install a record in the database.
+
+----------------------------------------------------------------------------
+
+void db_update(struct nlist *np, char *def, struct database *db)
+
+struct nlist *np
+	Pointer to record.
+
+char *def
+	New contents of record.
+
+struct database *db
+	Database handle.
+
+Description
+
+	Replece the definition with new data.
+----------------------------------------------------------------------------
+/* Retrieve */
+struct nlist *find_first(char *key, struct database *db)
+
+char *key
+	Search data.
+
+struct database *db
+	Database handle.
+
+Description
+
+	Search the database for the first occurence of the key. Uses two search
+	strategies.  First it tries for an exact match, if that fails and if the
+	flag MATCH is not ser it then searches for any occurence of the string in
+	the key field.
+----------------------------------------------------------------------------
+struct nlist *find_next(char *key, struct database *db)
+
+char *key
+	Search data.
+
+struct database *db
+	Database handle.
+
+Description
+
+	Search the database for the next occurence of the key. Uses one search
+	strategy. It  searches for any occurence of the string in the key field.
+----------------------------------------------------------------------------
+struct nlist *find_first_def(char *def, struct database *db);
+
+struct nlist *find_next_def(char *def, struct database *db);
+
+Description
+	As for find_first and find_next but seraches the data rather than the key.
+
+----------------------------------------------------------------------------
+
+/* Delete */
+void db_delete(struct nlist *np, struct database);
+
+struct nlist *np
+	Record pointer
+
+struct database *db
+	Database handle.
+
+Description
+
+	Delete the record.  Depending on the database flags the memory will either
+	be free'd or returned to the free record list.
+----------------------------------------------------------------------------
+
+/* Utilities */
+----------------------------------------------------------------------------
+struct database *db_create(int hash_size)
+
+	Creates the structures for a database.  The hash_size is the number of
+	heads for linked lists.  When a item is looked up by it's key field the
+	value is 'hashed' this identifies a bucket.  This is the head of a linked
+	list in which the record being searched for resides.
+
+RETURNS
+	Pointer to database on success.
+	NULL on failure.
+----------------------------------------------------------------------------
+void db_setattr(struct database *db, int flags, int max, int name_size, int def_size)
+
+struct database *db
+	A pointer to the database structures.
+
+int flags
+	Set the attributes for a new database. The flags are defined as follows:
+
+	FIXED 	Fixed length records.
+
+	DUPLICATE 2	Allow records with duplicate keys.
+
+	FIXED_DB_SIZE Database will grow until full.
+	No additional space will automatically be allocated.
+
+	NEVER_SHRINK As records are deleted the space the occupy is returned to
+	the free list.  If not set then the memory is free'd.
+	Typically used with FIXED_DB_SIZE.
+
+	STAMP Date stamp each record.
+
+int max
+	Max number of records in database.  
+	Ignored if FIXED_DB_SIZE flag is not set.
+
+int name_size
+	Size of name, or key field.  Ignored if FIXED is not set.
+
+int def_size
+	Size of defintion, or data field.  Ignored if FIXED is not set.
+
+----------------------------------------------------------------------------
+void db_dump(FILE *fp, struct database *table)
+
+FILE *fp
+	File pointer to a file open for writing
+
+struct database *table
+	Database to dump.
+
+Description
+	Write the specified database out to a file as text.  Formatted for 
+	re-loading.
+
+----------------------------------------------------------------------------
+void debug_dump(struct database *db)
+
+struct database *table
+	Database to dump.
+
+Description
+	Dump database statistics.
+
+----------------------------------------------------------------------------
+void bucket_stat(struct database *db)
+
+struct database *db
+	Database to dump.
+
+Description
+	Dump bucket statistics.
+----------------------------------------------------------------------------
+int db_load(char *fname, struct database *db);
+
+char *fname
+	Name of file to load.
+
+struct database *db
+	Database to put data in.
+
+Description
+	Load a database from a dump file.
+
+Returns
+	Success flag. NULL on failure.
+----------------------------------------------------------------------------
+

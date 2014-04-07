@@ -1,0 +1,142 @@
+TO DO:
+
+Have hash size as a parameter in the file header.
+
+Change the mechanism for creating databases.  db_create() creates a database structure, db_set_attributes() sets field sizes and hash values.
+
+--------------------
+
+
+struct database *db_create(int flags)
+
+Create the root structure for a database. Flags is formed by manipulating the following definitions (see db.h) :-
+
+	FIXED		Records are of a fixed and predetermined size.
+	DUPLICATE	Allow duplicate keys.
+
+
+Returns:
+
+	Return a pointer to the database structure on success or NULL.
+
+
+int db_load(char *filename,struct database *db)
+
+Loads a file into the specified database.
+
+Returns:
+	-1 on success.
+	 0 On failure.
+--------------------
+void db_setattr(struct *database db,int flags, int max_num_recs,int name_size,int def_size)
+
+Set database atrributes for database db, defined as follows :-
+
+	flags (see db.h) the following bits define the database properties
+
+	FIXED		Fixed length records
+	DUPLICATE	Allow duplicated records
+	FIXED_DB_SIZE	Pre-allocate empty records at start.  If database
+			grows to this then report an error.
+
+	NEVER_SHRINK	Deleted records are placed on a free list, if
+			nothing on list then new entries are allocated.
+
+	max_num_recs	Bound the database to this value.  Only valid if
+			FIXED_DB_SIZE is set.
+
+	name_size
+	def_size	If FIXED is set then the field length will always be 
+			this value.
+
+--------------------
+
+void db_dump(FILE *fp, struct *database db)
+
+Outputs the database, in a form compatable with db_load to the open file fp.
+
+
+void debug_dump(struct *database db)
+
+Writes detailed information about data occupancy and disposition to stdout.
+
+
+
+struct nlist *install(char *name,char *def, struct *database *db)
+
+Inserts the record with key field name and definition def into the database db.  The behaviour of install varies depending on the flags used to create db.
+
+If the database allows duplicate records then install does no checking for an existing record it simply places the definition in place.  If the database does not allow duplicates then the existing definition is replaced.
+
+RETURNS:
+
+A pointer to the record.
+
+BUG How do I update an existing record in a database that allows duplicates ?
+
+NOTE in the above case a lookup or find_first will allways find the newest entry first.  The others could be retained for archival purposes ?
+
+
+--------------------
+void db_update(struct *nlist np,char *def,database *db);
+
+Replace the definition pointed to by np with def.
+
+Return
+
+	Nothing
+
+
+--------------------
+
+struct nlist *find_first(char *s, struct database *db)
+
+Searches for the entry whith a key field that is either an exact match for s, 
+or returns the first record found where s is a substring in database db.
+
+RETURNS a pointer to the record, or NULL
+--------------------
+
+struct nlist *find_next(char *s,struct database *db);
+
+Continues the serach for s after a previous find_first.
+
+RETURNS a pointer to the record, or NULL
+--------------------
+
+struct nlist *find_first_def(char *s,struct database *db);
+
+Analogus to find_first, except searches the definition field.
+
+--------------------
+
+struct nlist *find_next_def(char *s,struct database *db);
+
+Analogus to find_first, except searches the definition field.
+
+--------------------
+
+void delete(struct nlist *np,struct database *db)
+
+Finds and deletes the record pointed to by np
+
+
+These four functions relate to fixed length records
+
+--------------------
+void db_set_key_len(int len, struct database *db);
+
+Set key length
+
+void db_set_def_len(int len, struct database *db);
+
+Set def length
+
+
+int db_get_key_len(struct database *db);
+
+Get key length
+
+int db_get_def_len(struct database *db);
+
+Get definition length
