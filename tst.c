@@ -37,7 +37,7 @@ int main() {
     db_status(table);
 
     status=db_load("tst.db", table);
-    //	status=db_load("fred.db", table);
+
     if(!status) {
         printf("Load faiure\n");
     }
