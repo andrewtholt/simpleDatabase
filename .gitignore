@@ -1,0 +1,31 @@
+# Object files
+*.o
+*.ko
+
+# Libraries
+*.lib
+*.a
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+ficl
+minficl
+main
+softcore/makesoftcore
+# Packages
+*.deb
+
+.c9revisions
+.settings
+*.c~
+*.db
+*.tar.gz
+lastBackedUp.txt

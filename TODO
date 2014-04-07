@@ -1,0 +1,16 @@
+
+DONE	1.High water mark.  When occupancy or free space reaches a specified
+	percentage, issue a warning.
+
+	Added a field to the database structure. An app would interogate
+	this and comapre with current occupancy, then decide on a course
+	of action, either a warning, or add records. 
+
+	Alternatively add a field fo a user defined call back function.  By default
+	do nothing.  A user could add a function to add records, print a warining
+	or set a global.
+
+DONE	2.A routine to grow the database by a specified number of records,
+	and to remove entries from the free list.
+
+
