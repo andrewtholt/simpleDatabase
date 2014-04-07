@@ -16,10 +16,7 @@
 *.exe
 *.out
 *.app
-ficl
-minficl
-main
-softcore/makesoftcore
+tst
 # Packages
 *.deb
 
