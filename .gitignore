@@ -26,6 +26,6 @@ softcore/makesoftcore
 .c9revisions
 .settings
 *.c~
-*.db
+
 *.tar.gz
 lastBackedUp.txt

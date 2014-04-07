@@ -244,8 +244,7 @@ strsave(s)
 }
 
 
-struct nlist   *
-db_install(name, def, db)
+struct nlist *db_install(name, def, db)
 	char           *name;
 	char           *def;
 	struct database *db;
@@ -307,13 +306,13 @@ db_install(name, def, db)
 				/*
 				*(np->name+db->name_size)=(char)NULL;
 				*/
-				*(np->name+name_len)=(char)NULL;
+				*(np->name+name_len)=(char)0x00;
 
 				(void) memcpy(np->def, def, def_len);
 				/*
 				*(np->def+db->def_size)=(char)NULL;
 				*/
-				*(np->def+def_len)=(char)NULL;
+				*(np->def+def_len)=(char)0x00;
 
 				if (db->flags && STAMP)
 				{
@@ -390,14 +389,12 @@ db_dump(fp, db)
 
 	fprintf(fp, "# flags:name_size:def_size:number_of_records\n");
 	fprintf(fp, "%d:%d:%d:%d\n", db->flags, db->name_size, db->def_size, db->max_num_records);
-	for (i = 0; i < HASHSIZE; i++)
-	{
-		if (db->hash_table[i])
-		{
+	for (i = 0; i < HASHSIZE; i++) {
+		if (db->hash_table[i]) {
 			np = db->hash_table[i]->hash_head;
-			do
-			{
-				fprintf(fp, "%s\t%s\t%d\n", np->name, np->def,np->updateTime);
+
+			do {
+				fprintf(fp, "%s\t%s\t%d\n", np->name, np->def,(int)np->updateTime);
 
 				np = np->next;
 			}
@@ -574,8 +571,10 @@ db_load(filename, db)
 	char            buffer[MAX_REC_SIZE];
 
 	fp = fopen(filename, "r");
-	if (!fp)
-		return (NULL);
+	if (!fp) {
+//		return ((int)NULL);
+		return (0);
+    }
 
 
 	do
