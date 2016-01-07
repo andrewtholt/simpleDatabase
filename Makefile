@@ -1,6 +1,7 @@
 #
 ARCHIVE=$(HOME)/Archive
-ARCHIVE_FILE=$(ARCHIVE)/smallDatabase.tar
+NAME=simpleDatabase
+ARCHIVE_FILE=$(ARCHIVE)/$NAME).tar
 
 CC = cc -g
 
@@ -20,5 +21,5 @@ clean:
 
 backup:
 	rm -f tst core *.o *~ cscope.out
-	( cd .. ; tar cvf $(ARCHIVE_FILE) ./smallDatabase )
+	( cd .. ; tar cvf $(ARCHIVE_FILE) ./$(NAME) )
 	touch BackUp.txt
