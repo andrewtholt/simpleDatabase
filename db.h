@@ -78,6 +78,7 @@ void db_dump();
 void debug_dump();
 void bucket_stat();
 int db_load();
+void db_status( struct database *);
 
 void db_set_key_len();
 void db_set_def_len();
