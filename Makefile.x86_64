@@ -6,8 +6,8 @@ CC = cc -g
 CFLAGS=-fPIC
 FLAG=BackUp.txt
 
-all:	tst libsdb.so
-tst:	tst.o libsdb.so
+all:	tst libsdb.so.0.0.1
+tst:	tst.o libsdb.so.0.0.1
 #	$(CC) tst.o db.o -o tst
 	$(CC) tst.o -L. -lsdb -o tst
 
@@ -16,7 +16,7 @@ libsdb.so.0.0.1:	db.o
 	ln -s libsdb.so.0.0.1 libsdb.so
 
 db.o:	db.c db.h
-	$(CC) -c $(CFLAGS) db.c -o db.o
+	$(CC) -c -fPIC $(CFLAGS) db.c -o db.o
 
 tst.o:	tst.c db.h
 	$(CC) -c $(CFLAGS) tst.c -o tst.o
@@ -33,4 +33,4 @@ backup:
 	( cd .. ; tar cvf $(ARCHIVE_FILE) ./smallDatabase )
 	touch BackUp.txt
 
-include tester.mk
+# include tester.mk
