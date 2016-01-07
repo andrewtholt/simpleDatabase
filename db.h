@@ -3,7 +3,8 @@
 
 struct nlist {
   char *name;
-  char *def;
+  //char *def;
+  void *def;
   int bucket_number;
   time_t updateTime;
   struct nlist *next;

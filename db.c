@@ -264,7 +264,7 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
                 /*
                  *(np->def+db->def_size)=(char)NULL;
                  */
-                *(np->def+def_len)=(char)0x00;
+                *((char *)np->def+def_len)=(char)0x00;
 
                 if (db->flags && STAMP) {
                     np->updateTime = time(NULL);
