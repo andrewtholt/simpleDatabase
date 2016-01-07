@@ -3,8 +3,11 @@
 
 struct nlist {
   char *name;
-  //char *def;
+
   void *def;
+
+  time_t ttl;
+
   int bucket_number;
   time_t updateTime;
   struct nlist *next;

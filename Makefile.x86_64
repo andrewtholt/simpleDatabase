@@ -1,0 +1,36 @@
+#
+ARCHIVE=$(HOME)/Archive
+ARCHIVE_FILE=$(ARCHIVE)/smallDatabase.tar
+
+CC = cc -g
+CFLAGS=-fPIC
+FLAG=BackUp.txt
+
+all:	tst libsdb.so
+tst:	tst.o libsdb.so
+#	$(CC) tst.o db.o -o tst
+	$(CC) tst.o -L. -lsdb -o tst
+
+libsdb.so.0.0.1:	db.o
+	gcc -shared -Wl,-soname,libsdb.so -o libsdb.so.0.0.1 db.o -lc
+	ln -s libsdb.so.0.0.1 libsdb.so
+
+db.o:	db.c db.h
+	$(CC) -c $(CFLAGS) db.c -o db.o
+
+tst.o:	tst.c db.h
+	$(CC) -c $(CFLAGS) tst.c -o tst.o
+
+clean:
+	rm -f tst core *.o *~ cscope.out
+
+install:	libsdb.so.0.0.1
+	cp ./libsdb.so /usr/local/lib
+	cp ./libsdb.so.0.0.1 /usr/local/lib
+
+backup:
+	rm -f tst core *.o *~ cscope.out
+	( cd .. ; tar cvf $(ARCHIVE_FILE) ./smallDatabase )
+	touch BackUp.txt
+
+include tester.mk
