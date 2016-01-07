@@ -22,7 +22,7 @@ tst.o:	tst.c db.h
 	$(CC) -c $(CFLAGS) tst.c -o tst.o
 
 clean:
-	rm -f tst core *.o *~ cscope.out
+	rm -f tst core *.o *~ cscope.out libsdb.so.0.0.1 libsdb.so
 
 install:	libsdb.so.0.0.1
 	cp ./libsdb.so /usr/local/lib
