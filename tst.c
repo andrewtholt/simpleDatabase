@@ -41,7 +41,8 @@ int main() {
     status=db_load("tst.db", table);
 
     if(!status) {
-        printf("Load faiure\n");
+        fprintf(stderr,"Load faiure\n");
+        exit(1);
     }
 
     printf("\nLoaded data ...\n");
