@@ -1,6 +1,9 @@
 #include <sys/types.h>
 #include <time.h>
 
+#ifndef _DB_H
+#define _DB_H
+
 struct nlist {
   char *name;
 
@@ -88,3 +91,6 @@ void db_set_def_len();
 
 int db_get_key_len();
 int db_get_def_len();
+
+#endif
+

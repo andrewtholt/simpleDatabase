@@ -26,3 +26,5 @@ tst
 
 *.tar.gz
 lastBackedUp.txt
+.gdb_history
+*.swp
