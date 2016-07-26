@@ -71,7 +71,7 @@ struct nlist   *find_first_def();
 struct nlist   *find_first_def();
 
 /* Delete */
-void delete();
+// void delete();
 
 /* Utilities */
 // Update
