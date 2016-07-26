@@ -1,3 +1,5 @@
 
+Crate a C++ class.
+
 As compile option, add mutexes where appropriate to make thread safe.
 
