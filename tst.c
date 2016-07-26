@@ -80,7 +80,7 @@ void print_record( struct nlist   *r) {
 
     if (r != NULL) {
         printf("\n\tName:\t%s\n", r->name);
-        printf("\tdef:\t%s\n", r->def);
+        printf("\tdef:\t%s\n", (char *)r->def);
         printf("\tUpdate time:\t%d\n",(int)r->updateTime);
     } else {
         printf("\nEmpty record\n");
