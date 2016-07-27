@@ -388,6 +388,7 @@ void db_status( struct database *db) {
 void fixed_width_print(char *s, int width) {
     int             i;
     int             len;
+    char scratch_buffer[MAX_REC_SIZE];
 
     len = strlen(s);
 
@@ -407,6 +408,8 @@ void fixed_width_print(char *s, int width) {
 void debug_dump(struct database *db) {
     int             i;
     struct nlist   *np;
+    
+    char scratch_buffer[MAX_REC_SIZE];
 
     db_status(db);
 
@@ -645,7 +648,7 @@ void db_delete(struct nlist   *np, struct database *db) {
 }
 
 
-struct database *db_create(unsigned int    hashsize) {
+struct database *db_create(int    hashsize) {
     struct database *table;
     int             i;
 

@@ -47,7 +47,7 @@ struct database {
 };
 
 #define MAX_REC_SIZE 1024
-char scratch_buffer[MAX_REC_SIZE];
+// char scratch_buffer[MAX_REC_SIZE];
 
 #define FREE -1
 #define IN_USE 0
@@ -62,11 +62,11 @@ Delete
 So here are mine */
 
 /* Create & update */
-struct database *db_create();
+struct database *db_create(int);
 struct nlist *db_install( char *name, char *def, struct database *db);
 struct nlist *install();
 /* Retrieve */
-struct nlist *find_first();
+struct nlist *find_first(char *, struct database *);
 struct nlist *find_next();
 struct nlist *find_first_def();
 struct nlist *find_next_def();
@@ -79,11 +79,11 @@ struct nlist   *find_first_def();
 /* Utilities */
 // Update
 void db_update();
-void db_setattr();
+void db_setattr(struct database *, int, int , int , int);
 void db_dump();
 void debug_dump();
 void bucket_stat();
-int db_load();
+int db_load(char *, struct database *);
 void db_status( struct database *);
 
 void db_set_key_len();

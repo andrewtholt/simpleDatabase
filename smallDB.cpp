@@ -1,13 +1,18 @@
 #include <stdio.h>
+#include <string.h>
 #include "smallDB.h"
 
+
 extern "C" {
+#include "db.h"
    struct database *db_create(int ) ;
-   void db_status( struct database *);
+//   void db_status( struct database *);
    void db_setattr(struct database *, int, int , int , int );
    
     int db_load(char *, struct database *);
     int db_load(char *fname, struct database *db);
+//    struct nlist *find_first(char *, struct database *) ;
+//    struct nlist *db_install(char *,char *, struct database *);
 }
 
 smallDB::smallDB() {
@@ -18,6 +23,11 @@ smallDB::smallDB() {
         fprintf(stderr, "DB Create failed.\n");
     }
 }
+
+int smallDB::getMaxRecSize() {
+    return MAX_REC_SIZE;
+}
+
 
 void smallDB::setattr(int flags, int max, int nameSize, int defSize) {
     // void db_setattr(struct database *db, int flags, int max, int nameSize, int defSize)
@@ -34,8 +44,41 @@ int smallDB::dbLoad(char *fname) {
     rc = db_load(fname, db);
     
     return rc;
+} 
+
+int smallDB::dbInsert(char *key, char *def ) {
     
+    int rc=0;
+    struct nlist *ptr;
+    
+    ptr =  db_install(key,def, db);
+    
+    if(!ptr) {
+        rc=0;
+    } else {
+        rc=1;
+    }
+    
+    return rc;
 }
+// 
+// TODO Don't like that this returns pointer to structure, should return void* to def.
+// 
+struct nlist *smallDB::findFirst(char *key, void *def) {
+    struct nlist *res;
+//    struct nlist *find_first(char *key, struct database *db)
+    res = find_first(key,db);
+    
+    if(!res) {
+        def=NULL;
+    } else {
+        memcpy(def, res->def, MAX_REC_SIZE);
+        def = res->def;
+    }   
+    
+    return res;
+}
+
 
 
 smallDB::~smallDB() {
