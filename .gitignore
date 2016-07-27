@@ -28,3 +28,4 @@ tst
 lastBackedUp.txt
 .gdb_history
 *.swp
+tstSmallDB

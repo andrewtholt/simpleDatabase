@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "smallDB.h"
 
 extern "C" {
@@ -9,6 +10,9 @@ smallDB::smallDB() {
     printf("Created\n");
 
     db = db_create(101);
+    if( NULL == db ) {
+        fprintf(stderr, "DB Create failed.\n");
+    }
 }
 
 smallDB::~smallDB() {
