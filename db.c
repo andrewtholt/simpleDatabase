@@ -295,6 +295,7 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
     return (np);
 }
 
+// TODO this should work if def ins not a string, i.e. it should be a void *
 
 void db_update(struct nlist *np, char *def, struct database *db) {
 

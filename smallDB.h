@@ -7,6 +7,7 @@
 class smallDB {
     public:
         smallDB();
+        void debugDump();
         int getMaxRecSize();
         ~smallDB();
         
@@ -18,6 +19,8 @@ class smallDB {
         int dbInsert(char *, char * ) ;
         bool findFirst(char *, void *) ;
         bool update(char *, void *);
+        
+        
         
     private:
         struct database *db;

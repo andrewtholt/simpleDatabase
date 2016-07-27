@@ -35,6 +35,7 @@ int main() {
     }
     
     rc = db->dbInsert((char *)"FRED",(char *)"TEST");
+    db->update((char *)"FRED",(void *)"NEW");
     
     found=db->findFirst((char *)"FRED",def);
     if( found) {
@@ -43,6 +44,7 @@ int main() {
         printf("FRED Not found\n");
     }
     
+//    db->debugDump();
     printf("Test Done\n");
 
 }

@@ -11,6 +11,7 @@ extern "C" {
 //   void db_status( struct database *);
    void db_setattr(struct database *, int, int , int , int );
    
+    void db_update(struct nlist *, char *, struct database *) ;
     int db_load(char *, struct database *);
     int db_load(char *fname, struct database *db);
 //    struct nlist *find_first(char *, struct database *) ;
@@ -26,13 +27,29 @@ smallDB::smallDB() {
     }
 }
 
+void smallDB::debugDump() {
+// void debug_dump(struct database *db) {
+    debug_dump(db) ;
+}
+
 bool smallDB::update(char *key, void *def) {
     bool fail=true;
     bool rc;
+    struct nlist *res;
     
     uint8_t tmp[MAX_REC_SIZE];
     
-    rc = findFirst(key,(void *)&tmp );
+    res = find_first(key,db);
+    
+    if(!res) { // key does not exist
+        fail=true;
+    } else {  // Key does exist
+        // void db_update(struct nlist *np, char *def, struct database *db) 
+        db_update(res,(char *)def,db);
+        fail=false;
+        
+        
+    }
     
     return fail;
 }
