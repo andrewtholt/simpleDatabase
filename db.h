@@ -1,5 +1,6 @@
 #include <sys/types.h>
 #include <time.h>
+#include <stdbool.h>
 
 #ifndef _DB_H
 #define _DB_H
@@ -13,6 +14,8 @@ struct nlist {
 
   int bucket_number;
   time_t updateTime;
+  
+  bool dontSave;
   struct nlist *next;
   struct nlist *prev;
 };
