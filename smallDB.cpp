@@ -5,7 +5,9 @@ extern "C" {
    struct database *db_create(int ) ;
    void db_status( struct database *);
    void db_setattr(struct database *, int, int , int , int );
-
+   
+    int db_load(char *, struct database *);
+    int db_load(char *fname, struct database *db);
 }
 
 smallDB::smallDB() {
@@ -24,6 +26,15 @@ void smallDB::setattr(int flags, int max, int nameSize, int defSize) {
 
 void smallDB::displayStatus(void) {
     db_status(db);
+}
+
+int smallDB::dbLoad(char *fname) {
+    int rc=0;
+    
+    rc = db_load(fname, db);
+    
+    return rc;
+    
 }
 
 

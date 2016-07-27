@@ -8,6 +8,8 @@ int main() {
 
 
     db->setattr(NEVER_SHRINK,0,10,10);
+    
+    db->dbLoad((char *)"tst.db");
     db->displayStatus();
 
 }
