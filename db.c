@@ -300,7 +300,8 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
 void db_update(struct nlist *np, char *def, struct database *db) {
 
     if (db->flags & FIXED) {
-        (void)memset(np->def, (int) ' ', db->def_size);
+        (void) memset(np->def, (int) 0, (size_t) db->def_size);
+//        (void)memset(np->def, (int) ' ', db->def_size);
         strncpy(np->def, def, strlen(def));
     } else {
         if (strlen(np->def) <= strlen(def)) {
