@@ -6,5 +6,6 @@ int main() {
 
     db = new smallDB();
 
+    db->displayStatus();
 
 }

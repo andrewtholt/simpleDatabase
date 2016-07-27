@@ -7,5 +7,8 @@ class smallDB {
     public:
         smallDB();
         ~smallDB();
+        void displayStatus(void);
+    private:
+        struct database *db;
 };
 #endif
