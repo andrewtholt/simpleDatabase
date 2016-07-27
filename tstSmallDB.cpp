@@ -6,6 +6,8 @@ int main() {
 
     db = new smallDB();
 
+
+    db->setattr(NEVER_SHRINK,0,10,10);
     db->displayStatus();
 
 }

@@ -8,6 +8,7 @@ class smallDB {
         smallDB();
         ~smallDB();
         void displayStatus(void);
+        void setattr(int flags, int max, int nameSize, int defSize);
     private:
         struct database *db;
 };
