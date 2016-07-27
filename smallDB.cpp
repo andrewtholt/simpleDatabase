@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <string.h>
 #include "smallDB.h"
 
@@ -23,6 +24,17 @@ smallDB::smallDB() {
     if( NULL == db ) {
         fprintf(stderr, "DB Create failed.\n");
     }
+}
+
+bool smallDB::update(char *key, void *def) {
+    bool fail=true;
+    bool rc;
+    
+    uint8_t tmp[MAX_REC_SIZE];
+    
+    rc = findFirst(key,(void *)&tmp );
+    
+    return fail;
 }
 
 int smallDB::getMaxRecSize() {

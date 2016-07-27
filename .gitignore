@@ -29,3 +29,4 @@ lastBackedUp.txt
 .gdb_history
 *.swp
 tstSmallDB
+*.kate-swp
