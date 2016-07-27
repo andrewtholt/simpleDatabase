@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 #ifndef SMALL_DB_H
 #define SMALL_DB_H
@@ -12,7 +13,7 @@ class smallDB {
         void setattr(int flags, int max, int nameSize, int defSize);
         int dbLoad(char *) ;
         int dbInsert(char *, char * ) ;
-        struct nlist *findFirst(char *, void *) ;
+        bool findFirst(char *, void *) ;
     private:
         struct database *db;
 };

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 #include "smallDB.h"
 
@@ -64,7 +65,8 @@ int smallDB::dbInsert(char *key, char *def ) {
 // 
 // TODO Don't like that this returns pointer to structure, should return void* to def.
 // 
-struct nlist *smallDB::findFirst(char *key, void *def) {
+// struct nlist *smallDB::findFirst(char *key, void *def) {
+bool smallDB::findFirst(char *key, void *def) {
     struct nlist *res;
 //    struct nlist *find_first(char *key, struct database *db)
     res = find_first(key,db);

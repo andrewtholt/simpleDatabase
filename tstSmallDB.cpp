@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "db.h"
 #include "smallDB.h"
 
@@ -9,6 +10,7 @@ int main() {
     struct nlist *ptr;
     void *def;
     int maxSize=0;
+    bool found=false;
 
     db = new smallDB();
 
@@ -26,19 +28,19 @@ int main() {
     }
     db->displayStatus();
     
-    ptr=db->findFirst((char *)"FRED",def);
+    found=db->findFirst((char *)"FRED",def);
     
-    if( NULL== ptr) {
+    if( !found) {
         printf("FRED Not found\n");
     }
     
     rc = db->dbInsert((char *)"FRED",(char *)"TEST");
     
-    ptr=db->findFirst((char *)"FRED",def);
-    if( NULL== ptr) {
-        printf("FRED Not found\n");
-    } else {
+    found=db->findFirst((char *)"FRED",def);
+    if( found) {
         printf("FRED found : %s\n",(char *)def);
+    } else {
+        printf("FRED Not found\n");
     }
     
     printf("Test Done\n");
