@@ -66,6 +66,7 @@ So here are mine */
 
 /* Create & update */
 struct database *db_create(int);
+
 struct nlist *db_install( char *name, char *def, struct database *db);
 struct nlist *install();
 /* Retrieve */
