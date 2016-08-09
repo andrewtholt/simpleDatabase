@@ -295,15 +295,20 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
     return (np);
 }
 
-// TODO this should work if def ins not a string, i.e. it should be a void *
+// TODO this should work if def is not a string, i.e. it should be a void *
 
 void db_update(struct nlist *np, char *def, struct database *db) {
 
     if (db->flags & FIXED) {
         (void) memset(np->def, (int) 0, (size_t) db->def_size);
 //        (void)memset(np->def, (int) ' ', db->def_size);
+        // TODO Replace with memcpy
         strncpy(np->def, def, strlen(def));
     } else {
+        // TODO: Q: How can I tell the length of structure specified by a void * ?
+        // A: you can't.  So variable length definitions can only store strings
+        // Unless a pass in the length.
+        //
         if (strlen(np->def) <= strlen(def)) {
             strcpy(np->def, def);
         } else {

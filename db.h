@@ -15,7 +15,7 @@ struct nlist {
   int bucket_number;
   time_t updateTime;
   
-  bool dontSave;
+  bool dontSave;        // If true dump wont outpit this.
   struct nlist *next;
   struct nlist *prev;
 };
