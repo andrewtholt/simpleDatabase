@@ -301,7 +301,7 @@ void db_update(struct nlist *np, char *def, struct database *db) {
 
     if (db->flags & FIXED) {
         (void) memset(np->def, (int) 0, (size_t) db->def_size);
-//        (void)memset(np->def, (int) ' ', db->def_size);
+        //        (void)memset(np->def, (int) ' ', db->def_size);
         // TODO Replace with memcpy
         strncpy(np->def, def, strlen(def));
     } else {
@@ -415,7 +415,7 @@ void fixed_width_print(char *s, int width) {
 void debug_dump(struct database *db) {
     int             i;
     struct nlist   *np;
-    
+
     char scratch_buffer[MAX_REC_SIZE];
 
     db_status(db);
