@@ -266,7 +266,7 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
                  */
                 *((char *)np->def+def_len)=(char)0x00;
 
-                if (db->flags && STAMP) {
+                if (db->flags & STAMP) {
                     np->updateTime = time(NULL);
                 } else {
                     np->updateTime = 0;
@@ -317,7 +317,7 @@ void db_update(struct nlist *np, char *def, struct database *db) {
                 strcpy(np->def, def);
         }
     }
-    if (db->flags && STAMP)
+    if (db->flags & STAMP)
         np->updateTime = time(NULL);
     else
         np->updateTime = 0;
@@ -521,7 +521,7 @@ int db_load(char *filename,struct database *db) {
 
         if ((name != NULL) & (def != NULL)) {
             np= db_install(name, def, db);
-            if(db->flags && STAMP)
+            if(db->flags & STAMP)
             {
                 if(stamp<=0)
                     np->updateTime=time(NULL);

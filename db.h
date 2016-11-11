@@ -20,8 +20,6 @@ struct nlist {
   struct nlist *prev;
 };
 
-
-
 struct hash_entry {
   struct nlist *hash_head;
   int ref_count;
@@ -30,12 +28,12 @@ struct hash_entry {
 
 /* Database properties held in flags */
 
-#define FIXED 1
-#define DUPLICATE 2
-#define FIXED_DB_SIZE 4
-#define NEVER_SHRINK 8
-#define STAMP 16
-#define MATCH 32 /* find must be a perfect match */
+#define FIXED         0x01
+#define DUPLICATE     0x02
+#define FIXED_DB_SIZE 0x04
+#define NEVER_SHRINK  0x08
+#define STAMP         0x10
+#define MATCH         0x20 /* find must be a perfect match */
 
 struct database {
   struct hash_entry **hash_table;
