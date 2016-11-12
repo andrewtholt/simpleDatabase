@@ -33,7 +33,6 @@ int main() {
     }
 
     //	db_setattr(table,FIXED|NEVER_SHRINK|STAMP,0,10,10);
-    db_setattr(table,NEVER_SHRINK|STAMP,0,10,10);
 
     db_status(table);
 
@@ -44,19 +43,23 @@ int main() {
         exit(1);
     }
 
+    /*
     printf("\nSet Attributes ... \n");
-    db_setattr(table,NEVER_SHRINK|STAMP,0,10,10);
+    db_setattr(table,NEVER_SHRINK|STAMP|FIXED,0,10,10);
+    */
+    printf("max records %d\n", table->max_num_records);
 
     printf("\nLoaded data ...\n");
     db_status(table);
 
     printf("\nPerforming lookup ...\n");
     np=find_first("ANDREW",table);
-    // np=find_first("FRED",table);
+
     print_record(np);
 
     if(np) {
-        bucket_stats(table);
+//        bucket_stats(table);
+        db_update(np,(char *)"Changed",table);       
         /*
            db_delete(np,table);
            */
@@ -70,9 +73,9 @@ int main() {
     printf("%6d records added\n\n",count);
     db_status(table);
 
-    //	fp=fopen("tst1.db","w");
+    fp=fopen("tst1.db","w");
 
-    fp=stdout;
+    // fp=stdout;
 
     db_dump(fp,table);
     db_dump(stdout,table);

@@ -276,7 +276,7 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
             (void)strncpy(np->name,name,sizeof(np->name));
             (void)strncpy(np->def,def,sizeof(np->def));
             db->hash_table[hashval]->ref_count++;
-            return (NULL);
+            return (np);
             /*
             if (((np->name = strsave(name)) == NULL) && ((np->def = strsave(def)) == NULL)) {
                 db->hash_table[hashval]->ref_count++;
@@ -476,7 +476,9 @@ void bucket_stats( struct database *db) {
 
 void db_setattr(struct database *db, int flags, int max_num_recs, int name_size, int def_size) {
     db->flags = flags;
-    db->max_num_records = max_num_recs;
+    if( max_num_recs > 0) {
+        db->max_num_records = max_num_recs;
+    }
     db->name_size = name_size;
     db->def_size = def_size;
 }
