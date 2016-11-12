@@ -10,5 +10,6 @@ Add mutexes where required to make thread safe.
 
 Add functions to:
     Trigger action on data write
+    Set function to execute on data write.
     subscribe
     unsubscribe
