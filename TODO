@@ -1,9 +1,14 @@
 
-Crate a C++ class.
+DONE Create a C++ class.
 
-As compile option, add mutexes where appropriate to make thread safe.
-
-Add a flag to disable the creation of new entries.
 
 DONE Create branch
 
+Add a flag to disable the creation of new entries.
+
+Add mutexes where required to make thread safe.
+
+Add functions to:
+    Trigger action on data write
+    subscribe
+    unsubscribe
