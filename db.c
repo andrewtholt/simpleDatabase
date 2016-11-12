@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "db.h"
 
@@ -689,12 +690,13 @@ struct database *db_create(int    hashsize) {
 
     if (table) {
         table->hashsize = hashsize;
-        table->name_size = -1;
-        table->def_size = -1;
+        table->name_size = MAX_NAME;
+        table->def_size = MAX_DEF;
         table->free_rec_list = (struct nlist *) NULL;
         table->free_rec_count = 0;
         table->max_num_records = 0;
-        table->alarm_level=100; /* Default is alarm when full */
+        table->alarm_level=100; // Default is alarm when full.
+        table->locked = false;  // Otherwise we wont be able to add new records.
         table->hash_table = (struct hash_entry **) malloc(table->hashsize * (sizeof(struct hash_entry)));
 
         if (table->hash_table) {

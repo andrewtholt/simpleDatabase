@@ -5,20 +5,23 @@
 #ifndef _DB_H
 #define _DB_H
 
-#define NAME_LEN 32
-#define DEF_LEN 32
+#define MAX_NAME 32
+#define MAX_DEF  32
+#define MAX_SUB   8
 
 struct nlist {
-  char name[NAME_LEN];
+  char name[MAX_NAME];
 
-  char def[DEF_LEN];
+  char def[MAX_DEF];
+
+  void *subList[MAX_SUB];
 
   time_t ttl;
 
   int bucket_number;
   time_t updateTime;
   
-  bool dontSave;        // If true dump wont outpit this.
+  bool dontSave;        // If true dump wont output this.
   struct nlist *next;
   struct nlist *prev;
 };
@@ -36,18 +39,21 @@ struct hash_entry {
 #define FIXED_DB_SIZE 0x04
 #define NEVER_SHRINK  0x08
 #define STAMP         0x10
-#define MATCH         0x20 /* find must be a perfect match */
+#define MATCH         0x20 // find must be a perfect match
 
 struct database {
   struct hash_entry **hash_table;
   int hashsize;
   unsigned int flags;
+  bool locked;          // When true will not allow new entries, or deletion of
+                        // existing entries, but will still
+                        // allow existing entries to be updated
   struct nlist *free_rec_list;
   int free_rec_count;
-  int max_num_records;	/* only has meaning if FIXED_DB_SIZE set */
-  int name_size;
-  int def_size;
-  int alarm_level;	/* % at which database is nearly full */
+  int max_num_records;	// only has meaning if FIXED_DB_SIZE set
+  int name_size;        // No meaning with fixed length name
+  int def_size;         // No meaning with fixed length def
+  int alarm_level;	    // % at which database is nearly full 
 };
 
 #define MAX_REC_SIZE 1024
