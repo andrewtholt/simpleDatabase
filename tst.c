@@ -33,9 +33,8 @@ int main() {
     }
 
     //	db_setattr(table,FIXED|NEVER_SHRINK|STAMP,0,10,10);
-    db_setattr(table,NEVER_SHRINK,0,10,10);
+    db_setattr(table,NEVER_SHRINK|STAMP,0,10,10);
 
-    printf("\nSet Attributes ... \n");
     db_status(table);
 
     status=db_load("tst.db", table);
@@ -45,11 +44,14 @@ int main() {
         exit(1);
     }
 
+    printf("\nSet Attributes ... \n");
+    db_setattr(table,NEVER_SHRINK|STAMP,0,10,10);
+
     printf("\nLoaded data ...\n");
     db_status(table);
 
     printf("\nPerforming lookup ...\n");
-    np=find_first("AMANDA",table);
+    np=find_first("ANDREW",table);
     // np=find_first("FRED",table);
     print_record(np);
 

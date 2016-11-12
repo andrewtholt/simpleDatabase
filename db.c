@@ -8,9 +8,7 @@
 
 /*
  * static struct nlist *hashtab[HASHSIZE];
- */
-
-/*
+ *
  * static struct hash_entry *hashtab[HASHSIZE];
  static struct hash_entry **hashtab;
  */
@@ -348,12 +346,11 @@ void db_dump( FILE           *fp, struct database *db) {
         if (db->hash_table[i]) {
             np = db->hash_table[i]->hash_head;
 
-            do {
+            while (np != NULL){
                 fprintf(fp, "%s\t%s\t%d\n", np->name, np->def,(int)np->updateTime);
 
                 np = np->next;
             }
-            while (np != NULL);
 
         }
     }
