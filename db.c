@@ -242,10 +242,12 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
         if (db->flags & FIXED) {
             if (!(db->flags & (FIXED_DB_SIZE | NEVER_SHRINK)))
             {
+                /*
                 np->name = (char *) malloc(db->name_size);
                 np->def = (char *) malloc(db->def_size);
                 bzero(np->name, db->name_size);
                 bzero(np->def, db->def_size);
+                */
             }
             {
                 int             name_len;
@@ -273,10 +275,16 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
                 }
             }
         } else {
+            (void)strncpy(np->name,name,sizeof(np->name));
+            (void)strncpy(np->def,def,sizeof(np->def));
+            db->hash_table[hashval]->ref_count++;
+            return (NULL);
+            /*
             if (((np->name = strsave(name)) == NULL) && ((np->def = strsave(def)) == NULL)) {
                 db->hash_table[hashval]->ref_count++;
                 return (NULL);
             }
+            */
         }
         /* hashval = hash(np->name); */
         np->next = db->hash_table[hashval]->hash_head;
@@ -289,8 +297,9 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
             np->next->prev = np;
         }
     } else {
-        free(np->def);
-        np->def=(char *)strsave(def);
+        // free(np->def);
+        // np->def=(char *)strsave(def);
+        (void)strncpy(np->def, def, sizeof(np->def));
     }
     return (np);
 }
@@ -308,7 +317,11 @@ void db_update(struct nlist *np, char *def, struct database *db) {
         // TODO: Q: How can I tell the length of structure specified by a void * ?
         // A: you can't.  So variable length definitions can only store strings
         // Unless a pass in the length.
+        // 12 November 2016.  Changing to fixed allocations to head off
+        // memory fragmentation on an embedded system.
         //
+        (void)strncpy(np->def,def,sizeof(np->def));
+        /*
         if (strlen(np->def) <= strlen(def)) {
             strcpy(np->def, def);
         } else {
@@ -316,6 +329,7 @@ void db_update(struct nlist *np, char *def, struct database *db) {
             if (np->def)
                 strcpy(np->def, def);
         }
+        */
     }
     if (db->flags & STAMP)
         np->updateTime = time(NULL);
@@ -551,6 +565,9 @@ void pre_allocate_records(struct database *db) {
             fprintf(stderr, "pre_allocate_records: Failed to allocate space for record %d\n", i);
             exit(-1);
         }
+        (void)memset(np->name,0,sizeof(np->name));
+        (void)memset(np->def,0,sizeof(np->def));
+        /*
         np->name = (char *) malloc(db->name_size);
         np->def = (char *) malloc(db->def_size);
 
@@ -558,6 +575,7 @@ void pre_allocate_records(struct database *db) {
             fprintf(stderr, "pre_allocate_records: Failed to allocate space for date for entry %d\n", i);
             exit(-1);
         }
+        */
         np->next = db->free_rec_list;
         db->free_rec_list = np;
     }
@@ -581,7 +599,15 @@ int add_to_free(struct database *db, int count) {
         if(!np) {
             exit_flag=1;
         } else {
+            // 
+            // Alocations all OK, so add to free list.
+            //
+            np->next = db->free_rec_list;
+            db->free_rec_list = np;
+            db->free_rec_count++;
+            db->max_num_records++;
 
+            /*
             np->name = (char *) malloc(db->name_size);
             np->def = (char *) malloc(db->def_size);
 
@@ -589,14 +615,15 @@ int add_to_free(struct database *db, int count) {
                 free(np);
                 exit_flag=1;
             } else {
-                /* 
-                 * Alocations all OK, so add to free list.
-                 */
+                // 
+                // Alocations all OK, so add to free list.
+                //
                 np->next = db->free_rec_list;
                 db->free_rec_list = np;
                 db->free_rec_count++;
                 db->max_num_records++;
             }
+            */
         }
     }
     return(added);

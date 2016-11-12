@@ -5,10 +5,13 @@
 #ifndef _DB_H
 #define _DB_H
 
-struct nlist {
-  char *name;
+#define NAME_LEN 32
+#define DEF_LEN 32
 
-  void *def;
+struct nlist {
+  char name[NAME_LEN];
+
+  char def[DEF_LEN];
 
   time_t ttl;
 
