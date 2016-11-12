@@ -5,4 +5,5 @@ As compile option, add mutexes where appropriate to make thread safe.
 
 Add a flag to disable the creation of new entries.
 
+DONE Create branch
 
