@@ -9,6 +9,13 @@
 #define MAX_DEF  32
 #define MAX_SUB   8
 
+enum cbTypeList {
+    CB_INVALID=0,   // Invalid, ignore callback pointer
+    CB_FPTR,        // callback pointer is a C function ptr
+    CB_XT           // callback pointer is an atlast XT.
+};
+
+
 struct nlist {
   char name[MAX_NAME];
 
@@ -22,6 +29,12 @@ struct nlist {
   time_t updateTime;
   
   bool dontSave;        // If true dump wont output this.
+
+  enum cbTypeList cbType;
+  void *callBack;       // If this is set then this 'points to' the
+                        // action to take when a value is changed.
+                        // Context is set by value of cbType.
+
   struct nlist *next;
   struct nlist *prev;
 };

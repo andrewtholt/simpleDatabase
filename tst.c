@@ -25,7 +25,8 @@ int main() {
 
     FILE *fp;
 
-    table=db_create(101);
+    // table=db_create(101);
+    table=db_create(11);
 
     if(!table) {
         fprintf(stderr,"Fatal Error: failed to create database\n");
@@ -67,10 +68,12 @@ int main() {
     db_status(table);
     np=db_install("1000","NEW TEST",table);
 
+    /*
     db_status(table);
     printf("Grow table by 100\n");
     count=add_to_free(table,100);
     printf("%6d records added\n\n",count);
+    */
     db_status(table);
 
     fp=fopen("tst1.db","w");

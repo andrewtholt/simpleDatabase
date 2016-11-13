@@ -236,6 +236,8 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
             if (np == NULL)
                 return (NULL);
         }
+        memset(np,0,sizeof(np));
+
         np->bucket_number = hashval;
 
         if (db->flags & FIXED) {
@@ -343,7 +345,8 @@ void db_dump( FILE           *fp, struct database *db) {
 
     fprintf(fp, "# flags:name_size:def_size:number_of_records\n");
     fprintf(fp, "%d:%d:%d:%d\n", db->flags, db->name_size, db->def_size, db->max_num_records);
-    for (i = 0; i < HASHSIZE; i++) {
+    // for (i = 0; i < HASHSIZE; i++) {
+    for (i = 0; i < db->hashsize; i++) {
         if (db->hash_table[i]) {
             np = db->hash_table[i]->hash_head;
 
