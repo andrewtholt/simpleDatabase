@@ -28,7 +28,7 @@ struct nlist {
   time_t updateTime;
   
   bool dontSave;        // If true dump wont output this.
-
+  bool readOnly;        // If true then can't write.
 
   struct nlist *next;
   struct nlist *prev;
