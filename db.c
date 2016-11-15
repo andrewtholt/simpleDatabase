@@ -712,9 +712,13 @@ struct database *db_create(int    hashsize) {
 }
 
 void db_set_key_len(int len, struct database *db) {
+#ifndef MAX_NAME
     db->name_size = len;
+#endif
 }
 
 void db_set_def_len(int len, struct database *db) {
+#ifndef MAX_DEF
     db->def_size = len;
+#endif
 }
