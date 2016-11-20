@@ -18,7 +18,6 @@ enum cbTypeList {
 
 struct nlist {
   char name[MAX_NAME];
-
   char def[MAX_DEF];
 
   bool published;   // If false don't accept PUB requests, just
@@ -32,11 +31,7 @@ struct nlist {
   time_t updateTime;
   
   bool dontSave;        // If true dump wont output this.
-
-  enum cbTypeList cbType;
-  void *callBack;       // If this is set then this 'points to' the
-                        // action to take when a value is changed.
-                        // Context is set by value of cbType.
+  bool readOnly;        // If true then can't write.
 
   struct nlist *next;
   struct nlist *prev;
@@ -67,9 +62,16 @@ struct database {
   struct nlist *free_rec_list;
   int free_rec_count;
   int max_num_records;	// only has meaning if FIXED_DB_SIZE set
+
   int name_size;        // No meaning with fixed length name
   int def_size;         // No meaning with fixed length def
+
   int alarm_level;	    // % at which database is nearly full 
+  
+  enum cbTypeList cbType;
+  void *callBack;       // If this is set then this 'points to' the
+                        // action to take when a value is changed.
+                        // Context is set by value of cbType.
 };
 
 #define MAX_REC_SIZE 1024

@@ -13,7 +13,7 @@ tst:	tst.o libsdb.so.0.0.1
 
 libsdb.so.0.0.1:	db.o
 	gcc -shared -Wl,-soname,libsdb.so -o libsdb.so.0.0.1 db.o -lc
-	ln -s libsdb.so.0.0.1 libsdb.so
+#	ln -s libsdb.so.0.0.1 libsdb.so
 
 db.o:	db.c db.h
 	$(CC) -c -fPIC $(CFLAGS) db.c -o db.o
