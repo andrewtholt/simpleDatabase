@@ -21,9 +21,12 @@ struct nlist {
 
   char def[MAX_DEF];
 
+  bool published;   // If false don't accept PUB requests, just
+                    // silently ignore them.
   void *subList[MAX_SUB];
 
-  time_t ttl;
+  time_t ttl;       // If this, plus update time is greater than the time now ...
+                    // set def = "NO_DATA"
 
   int bucket_number;
   time_t updateTime;
@@ -94,8 +97,8 @@ struct nlist *find_first(char *, struct database *);
 struct nlist *find_next();
 struct nlist *find_first_def();
 struct nlist *find_next_def();
-struct nlist   *find_first_def();
-struct nlist   *find_first_def();
+struct nlist *find_first_def();
+struct nlist *find_first_def();
 
 /* Delete */
 // void delete();
@@ -107,7 +110,7 @@ void db_setattr(struct database *, int, int , int , int);
 void db_dump();
 void debug_dump(struct database *);
 void bucket_stat();
-int db_load(char *, struct database *);
+int  db_load(char *, struct database *);
 void db_status( struct database *);
 
 void db_set_key_len();

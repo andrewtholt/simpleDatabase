@@ -82,15 +82,22 @@ int main() {
 
     db_dump(fp,table);
     db_dump(stdout,table);
+    //    debug_dump(table);
     //	bucket_stats(table);
 }
 
 void print_record( struct nlist   *r) {
 
     if (r != NULL) {
-        printf("\n\tName:\t%s\n", r->name);
-        printf("\tdef:\t%s\n", (char *)r->def);
+        printf("\n\tName       :\t%s\n", r->name);
+        printf("\tdef        :\t%s\n", (char *)r->def);
         printf("\tUpdate time:\t%d\n",(int)r->updateTime);
+        printf("\tPublished  :\t");
+        if(r->published) {
+            printf("True\n");
+        } else {
+            printf("False\n");
+        }
     } else {
         printf("\nEmpty record\n");
     }

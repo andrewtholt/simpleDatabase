@@ -241,14 +241,13 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
         np->bucket_number = hashval;
 
         if (db->flags & FIXED) {
-            if (!(db->flags & (FIXED_DB_SIZE | NEVER_SHRINK)))
-            {
+            if (!(db->flags & (FIXED_DB_SIZE | NEVER_SHRINK))) {
                 /*
-                np->name = (char *) malloc(db->name_size);
-                np->def = (char *) malloc(db->def_size);
-                bzero(np->name, db->name_size);
-                bzero(np->def, db->def_size);
-                */
+                   np->name = (char *) malloc(db->name_size);
+                   np->def = (char *) malloc(db->def_size);
+                   bzero(np->name, db->name_size);
+                   bzero(np->def, db->def_size);
+                   */
             }
             {
                 int             name_len;
@@ -281,11 +280,11 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
             db->hash_table[hashval]->ref_count++;
             return (np);
             /*
-            if (((np->name = strsave(name)) == NULL) && ((np->def = strsave(def)) == NULL)) {
-                db->hash_table[hashval]->ref_count++;
-                return (NULL);
-            }
-            */
+               if (((np->name = strsave(name)) == NULL) && ((np->def = strsave(def)) == NULL)) {
+               db->hash_table[hashval]->ref_count++;
+               return (NULL);
+               }
+               */
         }
         /* hashval = hash(np->name); */
         np->next = db->hash_table[hashval]->hash_head;
@@ -305,8 +304,6 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
     return (np);
 }
 
-// TODO this should work if def is not a string, i.e. it should be a void *
-
 void db_update(struct nlist *np, char *def, struct database *db) {
 
     if (db->flags & FIXED) {
@@ -323,14 +320,14 @@ void db_update(struct nlist *np, char *def, struct database *db) {
         //
         (void)strncpy(np->def,def,sizeof(np->def));
         /*
-        if (strlen(np->def) <= strlen(def)) {
-            strcpy(np->def, def);
-        } else {
-            np->def = (char *) realloc(np->def,strlen(def));
-            if (np->def)
-                strcpy(np->def, def);
-        }
-        */
+           if (strlen(np->def) <= strlen(def)) {
+           strcpy(np->def, def);
+           } else {
+           np->def = (char *) realloc(np->def,strlen(def));
+           if (np->def)
+           strcpy(np->def, def);
+           }
+           */
     }
     if (db->flags & STAMP)
         np->updateTime = time(NULL);
@@ -571,14 +568,14 @@ void pre_allocate_records(struct database *db) {
         (void)memset(np->name,0,sizeof(np->name));
         (void)memset(np->def,0,sizeof(np->def));
         /*
-        np->name = (char *) malloc(db->name_size);
-        np->def = (char *) malloc(db->def_size);
+           np->name = (char *) malloc(db->name_size);
+           np->def = (char *) malloc(db->def_size);
 
-        if ((!np->name) || (!np->def)) {
-            fprintf(stderr, "pre_allocate_records: Failed to allocate space for date for entry %d\n", i);
-            exit(-1);
-        }
-        */
+           if ((!np->name) || (!np->def)) {
+           fprintf(stderr, "pre_allocate_records: Failed to allocate space for date for entry %d\n", i);
+           exit(-1);
+           }
+           */
         np->next = db->free_rec_list;
         db->free_rec_list = np;
     }
@@ -611,20 +608,20 @@ int add_to_free(struct database *db, int count) {
             db->max_num_records++;
 
             /*
-            np->name = (char *) malloc(db->name_size);
-            np->def = (char *) malloc(db->def_size);
+               np->name = (char *) malloc(db->name_size);
+               np->def = (char *) malloc(db->def_size);
 
-            if ((!np->name) || (!np->def)) {
-                free(np);
-                exit_flag=1;
-            } else {
-                // 
-                // Alocations all OK, so add to free list.
-                //
-                np->next = db->free_rec_list;
-                db->free_rec_list = np;
-                db->free_rec_count++;
-                db->max_num_records++;
+               if ((!np->name) || (!np->def)) {
+               free(np);
+               exit_flag=1;
+               } else {
+            // 
+            // Alocations all OK, so add to free list.
+            //
+            np->next = db->free_rec_list;
+            db->free_rec_list = np;
+            db->free_rec_count++;
+            db->max_num_records++;
             }
             */
         }
