@@ -21,7 +21,7 @@ extern "C" {
 smallDB::smallDB() {
     printf("Created\n");
 
-    db = db_create(101);
+    db = db_create(11);
     if( NULL == db ) {
         fprintf(stderr, "DB Create failed.\n");
     }
@@ -72,6 +72,7 @@ int smallDB::dbLoad(char *fname) {
     int rc=0;
     
     rc = db_load(fname, db);
+    db->flags |= MATCH;
     
     return rc;
 } 

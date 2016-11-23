@@ -54,6 +54,9 @@ int main() {
     db_status(table);
 
     printf("\nPerforming lookup ...\n");
+    np=find_first("CRAP",table);
+
+    printf("\nPerforming lookup ...\n");
     np=find_first("ANDREW",table);
 
     print_record(np);
