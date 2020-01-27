@@ -35,6 +35,9 @@ int main() {
     }
     
     rc = db->dbInsert((char *)"FRED",(char *)"TEST");
+
+    db->update((char *)"FRED",(void *)"OLD");
+    db->update((char *)"FRED",(void *)"NEW");
     db->update((char *)"FRED",(void *)"NEW");
     
     found=db->findFirst((char *)"FRED",def);
