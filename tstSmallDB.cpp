@@ -36,10 +36,20 @@ int main() {
     
     rc = db->dbInsert((char *)"FRED",(char *)"TEST");
 
-    db->update((char *)"FRED",(void *)"OLD");
-    db->update((char *)"FRED",(void *)"NEW");
-    db->update((char *)"FRED",(void *)"NEW");
-    db->update((char *)"FRED",(void *)"NEW");
+    bool changed=false;
+
+    changed = db->update((char *)"FRED",(void *)"OLD");
+    (changed) ? printf("Updated\n") : printf("No change\n") ;
+
+    changed = db->update((char *)"FRED",(void *)"NEW");
+    (changed) ? printf("Updated\n") : printf("No change\n") ;
+
+    changed = db->update((char *)"FRED",(void *)"NEW");
+    (changed) ? printf("Updated\n") : printf("No change\n") ;
+
+    changed = db->update((char *)"FRED",(void *)"NEW");
+    (changed) ? printf("Updated\n") : printf("No change\n") ;
+
     
     found=db->findFirst((char *)"FRED",def);
     if( found) {

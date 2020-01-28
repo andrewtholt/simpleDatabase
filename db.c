@@ -299,7 +299,7 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
 
 bool db_update(struct nlist *np, char *def, struct database *db) {
     
-    bool found = false;
+    bool changed = false;
 
     if (db->flags & FIXED) {
 
@@ -310,8 +310,8 @@ bool db_update(struct nlist *np, char *def, struct database *db) {
 
         int status = memcmp(tmp, np->def, db->def_size);
 
-        found = (status == 0) ? true : false;
-        printf("Status=%d\n", found);
+        changed = (status == 0) ? false : true;
+        printf("Status=%d\n", changed);
 
         (void) memset(np->def, (int) 0, (size_t) db->def_size);
         //        (void)memset(np->def, (int) ' ', db->def_size);
@@ -334,6 +334,7 @@ bool db_update(struct nlist *np, char *def, struct database *db) {
         np->updateTime = time(NULL);
     else
         np->updateTime = 0;
+    return changed;
 }
 
 
