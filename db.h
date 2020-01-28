@@ -84,7 +84,7 @@ bool db_update(struct nlist *, char *, struct database *);
 void db_setattr(struct database *, int, int , int , int);
 void db_dump();
 void debug_dump(struct database *);
-void bucket_stat();
+void bucket_stats();
 int db_load(char *, struct database *);
 void db_status( struct database *);
 
@@ -93,6 +93,8 @@ void db_set_def_len();
 
 int db_get_key_len();
 int db_get_def_len();
+
+int add_to_free(struct database *, int );
 
 #endif
 

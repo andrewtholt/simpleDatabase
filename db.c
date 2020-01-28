@@ -349,7 +349,7 @@ void db_dump( FILE           *fp, struct database *db) {
             np = db->hash_table[i]->hash_head;
 
             do {
-                fprintf(fp, "%s\t%s\t%d\n", np->name, np->def,(int)np->updateTime);
+                fprintf(fp, "%s\t%s\t%d\n", (char *)np->name, (char *)np->def,(int)np->updateTime);
 
                 np = np->next;
             }
