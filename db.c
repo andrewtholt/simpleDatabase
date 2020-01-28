@@ -297,16 +297,21 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
 
 // TODO this should work if def is not a string, i.e. it should be a void *
 
-void db_update(struct nlist *np, char *def, struct database *db) {
-    bool changed = false;
+bool db_update(struct nlist *np, char *def, struct database *db) {
+    
+    bool found = false;
 
     if (db->flags & FIXED) {
-        char *tst = (char *)malloc(db->def_size);
-        (void)memset(tst,0,db->def_size);
 
-        memcpy(tst,def,strlen(def));
+        char *tmp = (char *)malloc(db->def_size);
 
-        int status = memcmp(np->def, tst, db->def_size);
+        memset(tmp, 0 , db->def_size);
+        memcpy(tmp, def, strlen(def));
+
+        int status = memcmp(tmp, np->def, db->def_size);
+
+        found = (status == 0) ? true : false;
+        printf("Status=%d\n", found);
 
         (void) memset(np->def, (int) 0, (size_t) db->def_size);
         //        (void)memset(np->def, (int) ' ', db->def_size);

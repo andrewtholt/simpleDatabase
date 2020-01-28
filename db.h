@@ -80,7 +80,7 @@ struct nlist   *find_first_def();
 
 /* Utilities */
 // Update
-void db_update(struct nlist *, char *, struct database *);
+bool db_update(struct nlist *, char *, struct database *);
 void db_setattr(struct database *, int, int , int , int);
 void db_dump();
 void debug_dump(struct database *);
