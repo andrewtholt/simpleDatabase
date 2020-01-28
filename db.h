@@ -28,12 +28,12 @@ struct hash_entry {
 
 /* Database properties held in flags */
 
-#define FIXED         0x01
-#define DUPLICATE     0x02
-#define FIXED_DB_SIZE 0x04
-#define NEVER_SHRINK  0x08
-#define STAMP         0x10
-#define MATCH         0x20 /* find must be a perfect match */
+#define FIXED         0x01  // Records of FIXED size.
+#define DUPLICATE     0x02  // Allow duplicate records
+#define FIXED_DB_SIZE 0x04  // db never growa, or shrinks
+#define NEVER_SHRINK  0x08  // dba can grow.
+#define STAMP         0x10  // Records timestamped
+#define MATCH         0x20  // find must be a perfect match.
 
 struct database {
   struct hash_entry **hash_table;
@@ -62,24 +62,30 @@ Delete
 
 So here are mine */
 
-/* Create & update */
+//
+// Create & update 
+//
 struct database *db_create(int);
 
 struct nlist *db_install( char *name, char *def, struct database *db);
 struct nlist *install();
-/* Retrieve */
+// 
+// Retrieve.
+//
 struct nlist *find_first(char *, struct database *);
 struct nlist *find_next();
 struct nlist *find_first_def();
 struct nlist *find_next_def();
 struct nlist   *find_first_def();
 struct nlist   *find_first_def();
-
-/* Delete */
+// 
+// Delete
 // void delete();
-
-/* Utilities */
+// 
+// Utilities.
+//
 // Update
+//
 bool db_update(struct nlist *, char *, struct database *);
 void db_setattr(struct database *, int, int , int , int);
 void db_dump();

@@ -62,7 +62,6 @@ int smallDB::getMaxRecSize() {
 
 
 void smallDB::setattr(int flags, int max, int nameSize, int defSize) {
-    // void db_setattr(struct database *db, int flags, int max, int nameSize, int defSize)
     db_setattr(db,flags,max,nameSize,defSize);
 }
 
