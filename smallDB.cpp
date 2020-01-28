@@ -18,6 +18,15 @@ extern "C" {
 //    struct nlist *db_install(char *,char *, struct database *);
 }
 
+smallDB::smallDB(int hash) {
+    printf("Created hash=%d\n", hash);
+
+    db = db_create(hash);
+    if( NULL == db ) {
+        fprintf(stderr, "DB Create failed.\n");
+    }
+}
+
 smallDB::smallDB() {
     printf("Created\n");
 

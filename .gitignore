@@ -30,3 +30,4 @@ lastBackedUp.txt
 *.swp
 tstSmallDB
 *.kate-swp
+tstPubSub
