@@ -55,10 +55,10 @@ pubsub::get(char *key)
  * Returns: bool *
  * Effects: 
  ***********************************************************************/
-void pubsub::set(char *key, char *value) {
+bool pubsub::set(char *key, char *value) {
 
 //    bzero(buffer,MAX_DEF);
-    int rc=0;
+    bool rc=false;
 
     bool found = db->findFirst(key, NULL);
     if (found) {
@@ -66,6 +66,7 @@ void pubsub::set(char *key, char *value) {
     } else {
         rc = db->dbInsert((char *)key,(char *)value);
     }
+    return rc;
 }
 
 

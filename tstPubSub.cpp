@@ -6,13 +6,15 @@ using namespace std;
 
 int main() {
 
+    bool c=false;
+
     pubsub *ps = new pubsub();
 
     ps->display();
 
-    ps->set((char *)"Test", (char *)"Value");
+    c=ps->set((char *)"Test", (char *)"Value");
     ps->display();
 
-    ps->set((char *)"Test",(char *)"Value");
+    c=ps->set((char *)"Test",(char *)"Value");
     ps->display();
 }

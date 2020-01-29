@@ -301,7 +301,7 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
 // TODO this should work if def is not a string, i.e. it should be a void *
 
 bool db_update(struct nlist *np, char *def, struct database *db) {
-    
+
     bool changed = false;
 
     if (db->flags & FIXED) {
@@ -325,12 +325,18 @@ bool db_update(struct nlist *np, char *def, struct database *db) {
         // A: you can't.  So variable length definitions can only store strings
         // Unless a pass in the length.
         //
-        if (strlen(np->def) <= strlen(def)) {
-            strcpy(np->def, def);
+        if(!strcmp(np->def, def)) {
+            changed = false;
         } else {
-            np->def = (char *) realloc(np->def,strlen(def));
-            if (np->def)
+            changed =true;
+
+            if (strlen(np->def) <= strlen(def)) {
                 strcpy(np->def, def);
+            } else {
+                np->def = (char *) realloc(np->def,strlen(def));
+                if (np->def)
+                    strcpy(np->def, def);
+            }
         }
     }
     if (db->flags & STAMP)

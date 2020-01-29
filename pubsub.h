@@ -19,7 +19,7 @@ class pubsub {
         ~pubsub();
 
         char *get(char *key);
-        void set(char *key, char *value);
+        bool set(char *key, char *value);
 
         bool sub(int id, char *key);
         bool unsub(int id, char *key);
