@@ -7,15 +7,15 @@
 
 extern "C" {
 #include "db.h"
-   struct database *db_create(int ) ;
-//   void db_status( struct database *);
-   void db_setattr(struct database *, int, int , int , int );
-   
-    bool db_update(struct nlist *, char *, struct database *) ;
+    struct database *db_create(int ) ;
+    //   void db_status( struct database *);
+    void db_setattr(struct database *, int, int , int , int );
+
+    struct nlist *db_update(struct nlist *, char *, struct database *) ;
     int db_load(char *, struct database *);
     int db_load(char *fname, struct database *db);
-//    struct nlist *find_first(char *, struct database *) ;
-//    struct nlist *db_install(char *,char *, struct database *);
+    //    struct nlist *find_first(char *, struct database *) ;
+    //    struct nlist *db_install(char *,char *, struct database *);
 }
 
 smallDB::smallDB(int hash) {
@@ -37,31 +37,31 @@ smallDB::smallDB() {
 }
 
 void smallDB::debugDump() {
-// void debug_dump(struct database *db) {
+    // void debug_dump(struct database *db) {
     debug_dump(db) ;
 }
 
 bool smallDB::update(char *key, void *def) {
-//    bool fail=true;
+    //    bool fail=true;
     bool changed=false;
 
     struct nlist *res;
-    
+
     res = find_first(key,db);
-    
+
     /*
-    if(!res) { // key does not exist
-        fail=true;
-    } else {  // Key does exist
-        changed=db_update(res,(char *)def,db);
-        fail=false;
-    }
-    */
-    
+       if(!res) { // key does not exist
+       fail=true;
+       } else {  // Key does exist
+       changed=db_update(res,(char *)def,db);
+       fail=false;
+       }
+       */
+
     if(res != NULL) { // key does not exist
-        changed=db_update(key,(char *)def,db);
+        changed=db_update(res, (char *)def,db);
     }
-    
+
     return changed;
 }
 
@@ -80,25 +80,25 @@ void smallDB::displayStatus(void) {
 
 int smallDB::dbLoad(char *fname) {
     int rc=0;
-    
+
     rc = db_load(fname, db);
-    
+
     return rc;
 } 
 
 int smallDB::dbInsert(char *key, char *def ) {
-    
+
     int rc=0;
     struct nlist *ptr;
-    
+
     ptr =  db_install(key,def, db);
-    
+
     if(!ptr) {
         rc=0;
     } else {
         rc=1;
     }
-    
+
     return rc;
 }
 // 
@@ -109,9 +109,9 @@ bool smallDB::findFirst(char *key, void *def) {
     bool found=false;
 
     struct nlist *res;
-//    struct nlist *find_first(char *key, struct database *db)
+    //    struct nlist *find_first(char *key, struct database *db)
     res = find_first(key,db);
-    
+
     if(!res) {
         found=false;
     } else {
@@ -120,9 +120,9 @@ bool smallDB::findFirst(char *key, void *def) {
         if( def != NULL) {
             memcpy(def, res->def, MAX_REC_SIZE);
         }
-//        def = res->def;
+        //        def = res->def;
     }   
-    
+
     return found;
 }
 

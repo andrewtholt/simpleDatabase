@@ -297,7 +297,7 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
 
 // TODO this should work if def is not a string, i.e. it should be a void *
 
-bool db_update(struct nlist *np, char *def, struct database *db) {
+struct nlist *db_update(struct nlist *np, char *def, struct database *db) {
     
     bool changed = false;
 
