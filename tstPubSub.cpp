@@ -8,4 +8,11 @@ int main() {
 
     pubsub *ps = new pubsub();
 
+    ps->display();
+
+    ps->set("Test","Value");
+    ps->display();
+
+    ps->set("Test","Value");
+    ps->display();
 }

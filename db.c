@@ -522,7 +522,7 @@ int db_load(char *filename,struct database *db) {
         pre_allocate_records(db);
     }
 
-    while (rec = fgets(buffer, MAX_REC_SIZE, fp)) {
+    while ((rec = fgets(buffer, MAX_REC_SIZE, fp))) {
         if (rec) {
             name = strtok(buffer, "\t");
             def = strtok(NULL, "\t");

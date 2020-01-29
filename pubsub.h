@@ -1,20 +1,25 @@
 #ifndef _TESTING
 #define _TESTING
 
+#define MAX_DEF (64)
+
+#include <strings.h>
 #ifdef __cplusplus
 #include <string>
+#include <iostream>
 #include "smallDB.h"
 
 class pubsub {
 
     private:
         smallDB *db;
+        char buffer[MAX_DEF];
     public:
         pubsub();
         ~pubsub();
 
         char *get(char *key);
-        bool *set(char *key, char *value);
+        void set(char *key, char *value);
 
         bool sub(int id, char *key);
         bool unsub(int id, char *key);

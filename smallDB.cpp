@@ -59,7 +59,7 @@ bool smallDB::update(char *key, void *def) {
     */
     
     if(res != NULL) { // key does not exist
-        changed=db_update(res,(char *)def,db);
+        changed=db_update(key,(char *)def,db);
     }
     
     return changed;
@@ -106,18 +106,24 @@ int smallDB::dbInsert(char *key, char *def ) {
 // 
 // struct nlist *smallDB::findFirst(char *key, void *def) {
 bool smallDB::findFirst(char *key, void *def) {
+    bool found=false;
+
     struct nlist *res;
 //    struct nlist *find_first(char *key, struct database *db)
     res = find_first(key,db);
     
     if(!res) {
-        def=NULL;
+        found=false;
     } else {
-        memcpy(def, res->def, MAX_REC_SIZE);
-        def = res->def;
+        found=true;
+
+        if( def != NULL) {
+            memcpy(def, res->def, MAX_REC_SIZE);
+        }
+//        def = res->def;
     }   
     
-    return res;
+    return found;
 }
 
 

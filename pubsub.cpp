@@ -13,7 +13,6 @@
  ***********************************************************************/
 pubsub::pubsub() {
     db = new smallDB();
-    db->displayStatus();
 }
 
 
@@ -33,8 +32,63 @@ pubsub::~pubsub()
  * Returns: void
  * Effects: 
  ***********************************************************************/
-void
-pubsub::display()
+void pubsub::display() {
+    db->displayStatus();
+}
+
+
+/***********************************************************************
+ *  Method: pubsub::get
+ *  Params: char *key
+ * Returns: char *
+ * Effects: 
+ ***********************************************************************/
+char *
+pubsub::get(char *key)
+{
+}
+
+
+/***********************************************************************
+ *  Method: pubsub::set
+ *  Params: char *key, char *value
+ * Returns: bool *
+ * Effects: 
+ ***********************************************************************/
+void pubsub::set(char *key, char *value) {
+
+//    bzero(buffer,MAX_DEF);
+    int rc=0;
+
+    bool found = db->findFirst(key, NULL);
+    if (found) {
+        rc = db->update((char *)key,(char *)value);
+    } else {
+        rc = db->dbInsert((char *)key,(char *)value);
+    }
+}
+
+
+/***********************************************************************
+ *  Method: pubsub::sub
+ *  Params: int id, char *key
+ * Returns: bool
+ * Effects: 
+ ***********************************************************************/
+bool
+pubsub::sub(int id, char *key)
+{
+}
+
+
+/***********************************************************************
+ *  Method: pubsub::unsub
+ *  Params: int id, char *key
+ * Returns: bool
+ * Effects: 
+ ***********************************************************************/
+bool
+pubsub::unsub(int id, char *key)
 {
 }
 

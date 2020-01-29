@@ -5,8 +5,11 @@ ARCHIVE_FILE=$(ARCHIVE)/$NAME).tar
 
 BINS=tst tstSmallDB tstPubSub
 
-CC = cc -g
-GPP = g++ -g
+# CC = cc -g
+# GPP = g++ -g
+
+CC = clang -g
+GPP = clang++ -g
 
 FLAG=BackUp.txt
 
@@ -18,7 +21,7 @@ tst:	tst.o db.o
 tstPubSub:	tstPubSub.cpp smallDB.o db.o pubsub.o
 	$(GPP) tstPubSub.cpp db.o smallDB.o pubsub.o -o tstPubSub
 
-pubsub.o:	smallDB.o pubsub.h
+pubsub.o:	smallDB.o pubsub.h pubsub.cpp pubsub.h
 	$(GPP) -c pubsub.cpp -o pubsub.o
 
 db.o:	db.c db.h
