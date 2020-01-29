@@ -1,0 +1,8 @@
+
+"libhello.so" lib hello
+
+hello drop
+"V"   "hello" func: hello
+"VNN" "order" func: order
+
+hello

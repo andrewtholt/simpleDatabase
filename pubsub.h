@@ -6,6 +6,7 @@
 #include <strings.h>
 #ifdef __cplusplus
 #include <string>
+#include <tuple>
 #include <iostream>
 #include "smallDB.h"
 
@@ -18,7 +19,7 @@ class pubsub {
         pubsub();
         ~pubsub();
 
-        char *get(char *key);
+        std::string get(char *key);
         bool set(char *key, char *value);
 
         bool sub(int id, char *key);

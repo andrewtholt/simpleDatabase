@@ -13,8 +13,15 @@ int main() {
     ps->display();
 
     c=ps->set((char *)"Test", (char *)"Value");
+    // 
+    // If c is true the definition changed.
+    // We can decide here if we want to do anything about it.
+    //
     ps->display();
 
     c=ps->set((char *)"Test",(char *)"Value");
     ps->display();
+
+    std::string result;
+    result=ps->get((char *)"Test");
 }

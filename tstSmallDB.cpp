@@ -28,7 +28,7 @@ int main() {
     }
     db->displayStatus();
     
-    found=db->findFirst((char *)"FRED",def);
+    found=db->findFirst((char *)"FRED",(char *)def);
     
     if( !found) {
         printf("FRED Not found\n");
@@ -51,7 +51,7 @@ int main() {
     (changed) ? printf("Updated\n") : printf("No change\n") ;
 
     
-    found=db->findFirst((char *)"FRED",def);
+    found=db->findFirst((char *)"FRED",(char *)def);
     if( found) {
         printf("FRED found : %s\n",(char *)def);
     } else {

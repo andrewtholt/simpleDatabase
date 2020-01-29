@@ -104,7 +104,7 @@ int smallDB::dbInsert(char *key, char *def ) {
 // TODO Don't like that this returns pointer to structure, should return void* to def.
 // 
 // struct nlist *smallDB::findFirst(char *key, void *def) {
-bool smallDB::findFirst(char *key, void *def) {
+bool smallDB::findFirst(char *key, char *def) {
     bool found=false;
 
     struct nlist *res;

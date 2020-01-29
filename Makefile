@@ -5,11 +5,11 @@ ARCHIVE_FILE=$(ARCHIVE)/$NAME).tar
 
 BINS=tst tstSmallDB tstPubSub
 
-# CC = cc -g
-# GPP = g++ -g
+CC = cc -g
+GPP = g++ -g -std=c++11 
 
-CC = clang -g
-GPP = clang++ -g
+# CC = clang -g
+# GPP = clang++ -g -std=c++11 
 
 FLAG=BackUp.txt
 

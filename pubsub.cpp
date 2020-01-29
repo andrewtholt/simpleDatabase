@@ -43,11 +43,23 @@ void pubsub::display() {
  * Returns: char *
  * Effects: 
  ***********************************************************************/
-char *
-pubsub::get(char *key)
-{
-}
+std::string pubsub::get(char *key) {
 
+    char def[MAX_DEF];
+
+    std::string res;
+
+    bool found=db->findFirst(key, (char *)def);
+
+    if( found ) {
+        printf("get %s\n",def);
+        res = def;
+    } else {
+        res = "";
+    }
+
+    return res;
+}
 
 /***********************************************************************
  *  Method: pubsub::set
