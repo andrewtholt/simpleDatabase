@@ -11,9 +11,9 @@ extern "C" {
     //   void db_status( struct database *);
     void db_setattr(struct database *, int, int , int , int );
 
-    struct nlist *db_update(struct nlist *, char *, struct database *) ;
-    int db_load(char *, struct database *);
-    int db_load(char *fname, struct database *db);
+    bool db_update(struct nlist *, char *, struct database *) ;
+    int  db_load(char *, struct database *);
+    int  db_load(char *fname, struct database *db);
     //    struct nlist *find_first(char *, struct database *) ;
     //    struct nlist *db_install(char *,char *, struct database *);
 }
@@ -49,18 +49,17 @@ bool smallDB::update(char *key, void *def) {
 
     res = find_first(key,db);
 
+    if(!res) { // key does not exist
+        changed=true;
+    } else {  // Key does exist
+        changed=db_update(res,(char *)def,db);
+    }
+
     /*
-       if(!res) { // key does not exist
-       fail=true;
-       } else {  // Key does exist
-       changed=db_update(res,(char *)def,db);
-       fail=false;
+       if(res != NULL) { // key does not exist
+       changed=db_update(res, (char *)def, db);
        }
        */
-
-    if(res != NULL) { // key does not exist
-        changed=db_update(res, (char *)def,db);
-    }
 
     return changed;
 }

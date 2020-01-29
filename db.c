@@ -273,7 +273,10 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
                 }
             }
         } else {
-            if (((np->name = strsave(name)) == NULL) && ((np->def = strsave(def)) == NULL)) {
+            np->name = strsave(name);
+            np->def = strsave(def);
+
+            if ((np->name == NULL) && (np->def  == NULL)) {
                 db->hash_table[hashval]->ref_count++;
                 return (NULL);
             }
@@ -297,7 +300,7 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
 
 // TODO this should work if def is not a string, i.e. it should be a void *
 
-struct nlist *db_update(struct nlist *np, char *def, struct database *db) {
+bool db_update(struct nlist *np, char *def, struct database *db) {
     
     bool changed = false;
 

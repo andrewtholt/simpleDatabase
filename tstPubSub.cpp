@@ -10,9 +10,9 @@ int main() {
 
     ps->display();
 
-    ps->set("Test","Value");
+    ps->set((char *)"Test", (char *)"Value");
     ps->display();
 
-    ps->set("Test","Value");
+    ps->set((char *)"Test",(char *)"Value");
     ps->display();
 }
