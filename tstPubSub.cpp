@@ -25,6 +25,13 @@ int main() {
     bool changed;
     string def;
 
-//    tie(changed, def) = ps->get((char *)"Test");
-    (void)ps->get((char *)"Test");
+    tie(changed, def) = ps->get((char *)"Test");
+
+    cout << "Found    : " << changed << endl;
+    cout << "Value    : " << def << endl;
+
+    tie(changed, def) = ps->get((char *)"Bill");
+
+    cout << "Found    : " << changed << endl;
+    cout << "Value    : " << def << endl;
 }
