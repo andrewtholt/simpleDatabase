@@ -10,6 +10,8 @@
 #include <string>
 #include <tuple>
 #include <iostream>
+#include <set>
+
 #include "db.h"
 #include "smallDB.h"
 
@@ -18,6 +20,8 @@ class pubsub {
     private:
         smallDB *db;
         char buffer[MAX_REC_SIZE];
+
+        std::set<std::string> subscriber;
     public:
         pubsub();
         ~pubsub();
