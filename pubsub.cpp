@@ -43,7 +43,7 @@ void pubsub::display() {
  * Returns: char *
  * Effects: 
  ***********************************************************************/
-std::tuple<bool, std::string> pubsub::get(char *key) {
+std::tuple<bool, std::string> pubsub::get(const char *key) {
 
     char def[MAX_REC_SIZE];
     bzero(def,MAX_REC_SIZE);
@@ -67,9 +67,7 @@ std::tuple<bool, std::string> pubsub::get(char *key) {
  * Returns: bool *
  * Effects: 
  ***********************************************************************/
-bool pubsub::set(char *key, char *value) {
-
-//    bzero(buffer,MAX_DEF);
+bool pubsub::set(const char *key, const char *value) {
     bool rc=false;
 
     bool found = db->findFirst(key, NULL);
@@ -88,9 +86,10 @@ bool pubsub::set(char *key, char *value) {
  * Returns: bool
  * Effects: 
  ***********************************************************************/
-bool
-pubsub::sub(int id, char *key)
-{
+bool pubsub::sub(int id, const char *key) {
+    bool fail=true;
+
+    return fail;
 }
 
 
@@ -100,9 +99,10 @@ pubsub::sub(int id, char *key)
  * Returns: bool
  * Effects: 
  ***********************************************************************/
-bool
-pubsub::unsub(int id, char *key)
-{
+bool pubsub::unsub(const int id, const char *key) {
+    bool failed=true;
+
+    return failed;
 }
 
 

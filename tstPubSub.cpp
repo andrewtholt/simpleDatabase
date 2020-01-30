@@ -6,32 +6,35 @@ using namespace std;
 
 int main() {
 
-    bool c=false;
+    bool changed=false;
+
+    string key="Testing ";
+    string value="123";
 
     pubsub *ps = new pubsub();
 
     ps->display();
 
-    c=ps->set((char *)"Test", (char *)"Value");
+    changed=ps->set(key.c_str(), (char *)"Value");
     // 
     // If c is true the definition changed.
     // We can decide here if we want to do anything about it.
     //
     ps->display();
 
-    c=ps->set((char *)"Test",(char *)"Value");
+    changed=ps->set((char *)"Test",(char *)"Value");
     ps->display();
 
-    bool changed;
+    bool found;
     string def;
 
-    tie(changed, def) = ps->get((char *)"Test");
+    tie(found, def) = ps->get((char *)"Test");
 
-    cout << "Found    : " << changed << endl;
+    cout << "Found    : " << found << endl;
     cout << "Value    : " << def << endl;
 
-    tie(changed, def) = ps->get((char *)"Bill");
+    tie(found, def) = ps->get((char *)"Bill");
 
-    cout << "Found    : " << changed << endl;
+    cout << "Found    : " << found << endl;
     cout << "Value    : " << def << endl;
 }

@@ -73,7 +73,7 @@ struct nlist *install();
 // 
 // Retrieve.
 //
-struct nlist *find_first(char *, struct database *);
+struct nlist *find_first(const char *, struct database *);
 struct nlist *find_next();
 struct nlist *find_first_def();
 struct nlist *find_next_def();

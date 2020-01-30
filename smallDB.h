@@ -18,7 +18,7 @@ class smallDB {
         int dbLoad(char *) ;
         
         int dbInsert(char *, char * ) ;
-        bool findFirst(char *, char *) ;
+        bool findFirst(const char *, char *) ;
         bool update(char *, void *);
         
     private:

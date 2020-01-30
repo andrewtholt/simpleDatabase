@@ -22,11 +22,11 @@ class pubsub {
         pubsub();
         ~pubsub();
 
-        std::tuple<bool, std::string>  get(char *key);
-        bool set(char *key, char *value);
+        std::tuple<bool, std::string>  get(const char *key);
+        bool set(const char *key, const char *value);
 
-        bool sub(int id, char *key);
-        bool unsub(int id, char *key);
+        bool sub(const int id, const char *key);
+        bool unsub(const int id, const char *key);
 
         void display();
 };

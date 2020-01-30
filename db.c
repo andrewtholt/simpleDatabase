@@ -22,7 +22,7 @@ static struct nlist *last_np = NULL;
 
 void            pre_allocate_records();
 
-int hash( struct database *db, char *s) {
+int hash( struct database *db, const char *s) {
     int             hashval;
 
     for (hashval = 0; *s != '\0';) {
@@ -32,7 +32,7 @@ int hash( struct database *db, char *s) {
     return (hashval % db->hashsize);
 }
 
-struct nlist   *lookup(char *s, struct database *db) {
+struct nlist *lookup(const char *s, struct database *db) {
     struct nlist   *np;
     int             hashval;
 
@@ -70,7 +70,7 @@ struct nlist   *lookup(char *s, struct database *db) {
  * given string
  */
 
-struct nlist *wild_key_lookup( char *s, int instance, struct database *db) {
+struct nlist *wild_key_lookup( const char *s, int instance, struct database *db) {
     struct nlist   *np;
     int             i;
     char           *tmp;
@@ -163,7 +163,7 @@ struct nlist   *find_next_def( char *s, struct database *db) {
     return (np);
 }
 
-struct nlist   *find_first( char           *s, struct database *db) {
+struct nlist   *find_first( const char *s, struct database *db) {
 
     struct nlist   *np= (struct nlist *)NULL;
     struct nlist   *lookup();
