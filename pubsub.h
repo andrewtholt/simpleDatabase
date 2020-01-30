@@ -1,7 +1,7 @@
 #ifndef _TESTING
 #define _TESTING
 
-#define MAX_DEF (64)
+// #define MAX_DEF (64)
 
 #include <strings.h>
 #include <string.h>
@@ -10,13 +10,14 @@
 #include <string>
 #include <tuple>
 #include <iostream>
+#include "db.h"
 #include "smallDB.h"
 
 class pubsub {
 
     private:
         smallDB *db;
-        char buffer[MAX_DEF];
+        char buffer[MAX_REC_SIZE];
     public:
         pubsub();
         ~pubsub();

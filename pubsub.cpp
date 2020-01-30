@@ -45,8 +45,8 @@ void pubsub::display() {
  ***********************************************************************/
 std::tuple<bool, std::string> pubsub::get(char *key) {
 
-    char def[MAX_DEF];
-    bzero(def,MAX_DEF);
+    char def[MAX_REC_SIZE];
+    bzero(def,MAX_REC_SIZE);
 
 //    std::string res;
 
