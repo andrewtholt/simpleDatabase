@@ -68,15 +68,16 @@ std::tuple<bool, std::string> pubsub::get(const char *key) {
  * Effects: 
  ***********************************************************************/
 bool pubsub::set(const char *key, const char *value) {
-    bool rc=false;
+    bool changed=false;
 
     bool found = db->findFirst(key, NULL);
     if (found) {
-        rc = db->update((char *)key,(char *)value);
+        changed = db->update((char *)key,(char *)value);
     } else {
-        rc = db->dbInsert((char *)key,(char *)value);
+        changed = db->dbInsert((char *)key,(char *)value);
+        changed=true;
     }
-    return rc;
+    return changed;
 }
 
 
