@@ -47,7 +47,8 @@ struct database {
   int alarm_level;	/* % at which database is nearly full */
 };
 
-#define MAX_REC_SIZE 1024
+#define MAX_REC_SIZE 64
+// #define MAX_REC_SIZE 1024
 // char scratch_buffer[MAX_REC_SIZE];
 
 #define FREE -1

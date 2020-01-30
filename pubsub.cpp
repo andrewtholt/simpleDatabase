@@ -43,22 +43,22 @@ void pubsub::display() {
  * Returns: char *
  * Effects: 
  ***********************************************************************/
-std::string pubsub::get(char *key) {
+std::tuple<bool, std::string> pubsub::get(char *key) {
 
     char def[MAX_DEF];
+    bzero(def,MAX_DEF);
 
-    std::string res;
+//    std::string res;
 
     bool found=db->findFirst(key, (char *)def);
 
     if( found ) {
         printf("get %s\n",def);
-        res = def;
-    } else {
-        res = "";
-    }
+    } // else {
+//        res = "";
+//    }
 
-    return res;
+    return std::make_tuple(found, std::string(def ));
 }
 
 /***********************************************************************

@@ -4,6 +4,8 @@
 #define MAX_DEF (64)
 
 #include <strings.h>
+#include <string.h>
+
 #ifdef __cplusplus
 #include <string>
 #include <tuple>
@@ -19,7 +21,7 @@ class pubsub {
         pubsub();
         ~pubsub();
 
-        std::string get(char *key);
+        std::tuple<bool, std::string>  get(char *key);
         bool set(char *key, char *value);
 
         bool sub(int id, char *key);

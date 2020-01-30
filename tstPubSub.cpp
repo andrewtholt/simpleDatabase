@@ -22,6 +22,9 @@ int main() {
     c=ps->set((char *)"Test",(char *)"Value");
     ps->display();
 
-    std::string result;
-    result=ps->get((char *)"Test");
+    bool changed;
+    string def;
+
+//    tie(changed, def) = ps->get((char *)"Test");
+    (void)ps->get((char *)"Test");
 }
