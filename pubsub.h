@@ -19,6 +19,10 @@
 #define MAX_SUB (10)    // Maximum number of subscribers to a key
 // 
 // TODO Add a callback to run when a key value has changed
+// 
+// callBack(std::set subscribers, char *key, char *data);
+//
+// This knows how to contact the subscribers.
 //
 class pubsub {
 
