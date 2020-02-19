@@ -32,6 +32,8 @@ class pubsub {
         bool sub(const int id, const char *key);
         bool unsub(const int id, const char *key);
 
+//        std::array<std::string> getSubscribers(const char *key);
+
         void display();
 };
 
