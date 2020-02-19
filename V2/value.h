@@ -21,7 +21,6 @@ class value {
         //        void (*callback)(uint8_t, std::string, std::string );
         void (*callback)(value *);
     public:
-
         value();
         value(std::string);
         void addSubscriber(uint8_t);
@@ -30,6 +29,8 @@ class value {
         std::string get();
 
         void setOnChange(bool);
+
+        void setCallback( void (*f)( value * ));
 
         void display();
 };

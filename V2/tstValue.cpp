@@ -1,6 +1,14 @@
 #include "value.h"
 #include <iostream>
 
+using namespace std;
+
+void myCallback(value *ptr) {
+    cout << "Local callback" << endl;
+
+    ptr->display();
+}
+
 int main() {
     value *tst = new value("TST");
 
@@ -11,6 +19,8 @@ int main() {
     tst->addSubscriber(2);
 
     tst->display();
+
+    tst->setCallback( myCallback );
 
     tst->set("NEW_TST");
 

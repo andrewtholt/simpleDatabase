@@ -120,4 +120,7 @@ void value::setOnChange(bool f) {
     onChange = f;
 }
 
+void value::setCallback( void (*f)( value * )) {
+    callback = f;
+}
 
