@@ -1,0 +1,50 @@
+#ifndef _TESTING
+#define _TESTING
+
+#include <stdint.h>
+#ifdef __cplusplus
+#include <string>
+#include <set>
+
+
+#include <string>
+class value {
+
+    private:
+        std::string v;
+
+        std::set<uint8_t> subscriber;
+
+        bool onChange;  // When true only notify subscribers if a change took place.
+
+        void commonInit();
+        //        void (*callback)(uint8_t, std::string, std::string );
+        void (*callback)(value *);
+    public:
+
+        value();
+        value(std::string);
+        void addSubscriber(uint8_t);
+
+        void set( std::string );
+        std::string get();
+
+        void setOnChange(bool);
+
+        void display();
+};
+
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+    struct value* newClass();
+    void display(struct value*);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // _TESTING
