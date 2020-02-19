@@ -3,10 +3,14 @@
 
 using namespace std;
 
-void myCallback(value *ptr) {
+void myCallback(uint8_t id, std::string val) {
+// void myCallback(value *ptr) {
     cout << "Local callback" << endl;
-
-    ptr->display();
+    cout << "\t" << unsigned(id) << endl;
+    cout << "\t" << val << endl;
+    //
+    // TODO Add comms mechanism to notify subscriber
+    //
 }
 
 int main() {

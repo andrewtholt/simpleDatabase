@@ -18,19 +18,22 @@ class value {
         bool onChange;  // When true only notify subscribers if a change took place.
 
         void commonInit();
-        //        void (*callback)(uint8_t, std::string, std::string );
-        void (*callback)(value *);
+        void (*callback)(uint8_t, std::string );
+//        void (*callback)(value *);
     public:
         value();
         value(std::string);
-        void addSubscriber(uint8_t);
+
+        void addSubscriber(uint8_t id);
+        void rmSubscriber(uint8_t id);
 
         void set( std::string );
         std::string get();
 
         void setOnChange(bool);
 
-        void setCallback( void (*f)( value * ));
+//        void setCallback( void (*f)( value * ));
+        void setCallback( void (*f)(uint8_t, std::string ));
 
         void display();
 };

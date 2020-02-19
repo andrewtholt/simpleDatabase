@@ -8,9 +8,8 @@
 #include <iostream>
 
 
-// void defaultCallback(uint8_t id, std::string key, std::string val) {
-void defaultCallback(value *ptr) {
-    ptr->display();
+void defaultCallback(uint8_t id, std::string val) {
+// void defaultCallback(value *ptr) {
     std::cout << "Default callback, change me," << std::endl;
 }
 /***********************************************************************
@@ -73,6 +72,15 @@ void value::addSubscriber(uint8_t id) {
     subscriber.insert(id);
 }
 
+/***********************************************************************
+ *  Method: value::rmSubscriber
+ *  Params: uint8_t
+ * Returns: void
+ * Effects: 
+ ***********************************************************************/
+void value::rmSubscriber(uint8_t id) {
+    subscriber.erase(id);
+}
 
 /***********************************************************************
  *  Method: value::set
@@ -91,7 +99,13 @@ void value::set(std::string in) {
     if( subscriber.size() > 0) {
         if(changed && onChange) {
             std::cout << "Changed" << std::endl;
-            (*callback)(this);
+
+            for( auto i : subscriber ) {
+                std::cout << "Send to " << unsigned(i) << std::endl;
+                (*callback)(i, v);
+            }
+
+//      void defaultCallback(uint8_t id, std::string key, std::string val) {
         }
     } else {
         std::cout << "No subscribers." << std::endl;
@@ -120,7 +134,7 @@ void value::setOnChange(bool f) {
     onChange = f;
 }
 
-void value::setCallback( void (*f)( value * )) {
+void value::setCallback( void (*f)(uint8_t id, std::string val)) {
     callback = f;
 }
 
