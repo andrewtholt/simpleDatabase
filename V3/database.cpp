@@ -118,9 +118,16 @@ void database::setPubPolicy(std::string key, uint8_t policy) {
  * Returns: std::string
  * Effects: 
  ***********************************************************************/
-std::string
-database::get(std::string key)
-{
+std::string database::get(std::string key) {
+    std::string d = "";
+    int found=data.count( key );
+
+    if(found == 1) {
+        d = data[key]->value;
+    } else {
+        d="<NO DATA>";
+    }
+    return d;
 }
 
 
@@ -145,6 +152,17 @@ database::sub(void *id, std::string key)
 void
 database::unsub(void *id, std::string key)
 {
+}
+
+
+/***********************************************************************
+ *  Method: database::getSubscriber
+ *  Params: std::string key
+ * Returns: std::set<void *>
+ * Effects: 
+ ***********************************************************************/
+std::set<void *>database::getSubscriber(std::string key) {
+    return data[key]->subscriber;
 }
 
 

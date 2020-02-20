@@ -4,9 +4,22 @@
 using namespace std;
 
 class myDatabase : public database {
+    private:
+        void doPublish(std::string key);
     public:
         bool add(std::string, std::string) ;
 }; 
+
+void myDatabase::doPublish(std::string key) {
+
+    std::set<void *> ptr = getSubscriber( key) ;
+
+    if( ptr.size() > 0 ) {
+        for( auto p : ptr ) {
+            printf("%04x\n", p);
+        }
+    }
+}
 
 bool myDatabase::add(std::string k, std::string v) {
     cout << "Here" << endl;
@@ -34,6 +47,10 @@ bool myDatabase::add(std::string k, std::string v) {
             }
 
             break;
+    }
+
+    if( pub ) {
+        doPublish(k);
     }
 
     return pub;
@@ -70,5 +87,8 @@ int main() {
     updated = db.add("TEST","MORE DATA");
 
     cout << unsigned(tst++) << "  " << updated << endl;
+
+    cout << db.get("TEST") << endl;
+    cout << db.get("A TEST") << endl;
 }
 

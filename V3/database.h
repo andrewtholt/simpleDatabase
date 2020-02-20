@@ -27,6 +27,8 @@ class database {
     public:
         uint8_t getPubPolicy(std::string key);
         void    setPubPolicy(std::string key, uint8_t policy);
+
+        std::set<void *>getSubscriber(std::string key);
         database();
 
         bool add(std::string key, std::string v);
