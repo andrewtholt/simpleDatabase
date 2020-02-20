@@ -77,3 +77,74 @@ bool database::add(std::string key, std::string v) {
 }
 
 
+/***********************************************************************
+ *  Method: database::getPubPolicy
+ *  Params: std::string key
+ * Returns: uint8_t
+ * Effects: 
+ ***********************************************************************/
+uint8_t database::getPubPolicy(std::string key) {
+    uint8_t p=PUB_ON_UPDATE;
+
+    int found=data.count( key );
+
+    if(found == 1) {
+        p = data[ key ]->pubPolicy;
+    }
+
+    return p;
+
+}
+/***********************************************************************
+ *  Method: database::setPubPolicy
+ *  Params: std::string key, uint8_t policy
+ * Returns: void
+ * Effects: 
+ ***********************************************************************/
+void database::setPubPolicy(std::string key, uint8_t policy) {
+
+    int found=data.count( key );
+
+    if(found == 1) {
+        data[ key ]->pubPolicy = policy;
+    }
+
+}
+
+
+/***********************************************************************
+ *  Method: database::get
+ *  Params: std::string key
+ * Returns: std::string
+ * Effects: 
+ ***********************************************************************/
+std::string
+database::get(std::string key)
+{
+}
+
+
+/***********************************************************************
+ *  Method: database::sub
+ *  Params: void *id, std::string key
+ * Returns: void
+ * Effects: 
+ ***********************************************************************/
+void
+database::sub(void *id, std::string key)
+{
+}
+
+
+/***********************************************************************
+ *  Method: database::unsub
+ *  Params: void *id, std::string key
+ * Returns: void
+ * Effects: 
+ ***********************************************************************/
+void
+database::unsub(void *id, std::string key)
+{
+}
+
+

@@ -9,7 +9,7 @@
 #include <map>
 
 #define PUB_ON_UPDATE (0)
-#define PUB_ON_CHANGE (0)
+#define PUB_ON_CHANGE (1)
 
 struct dbValue {
     std::string value;
@@ -23,11 +23,17 @@ class database {
     private:
         std::map<std::string, struct dbValue *> data;
         void commonInit();
-    public:
 
+    public:
+        uint8_t getPubPolicy(std::string key);
+        void    setPubPolicy(std::string key, uint8_t policy);
         database();
+
         bool add(std::string key, std::string v);
-        std::string databaseing;
+        std::string get(std::string key);
+
+        void sub(void *id, std::string key);
+        void unsub(void *id, std::string key);
 
         void display();
 };
