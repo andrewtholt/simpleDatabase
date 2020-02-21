@@ -1,34 +1,10 @@
 /***********************************************************************
  * AUTHOR:  <andrewh>
  *   FILE: .//database.cpp
- *   DATE: Thu Feb 20 08:08:20 2020
+ *   DATE: Fri Feb 21 12:41:37 2020
  *  DESCR: 
  ***********************************************************************/
 #include "database.h"
-#include <string.h>
-#include <iostream>
-
-/***********************************************************************
- *  Method: database::database
- *  Params: 
- * Effects: 
- ***********************************************************************/
-database::database() {
-    commonInit();
-}
-
-
-/***********************************************************************
- *  Method: database::display
- *  Params: 
- * Returns: void
- * Effects: 
- ***********************************************************************/
-void
-database::display()
-{
-}
-
 
 /***********************************************************************
  *  Method: database::commonInit
@@ -36,8 +12,65 @@ database::display()
  * Returns: void
  * Effects: 
  ***********************************************************************/
-void database::commonInit() {
-    std::cout << "Common Init" << std::endl;
+void
+database::commonInit()
+{
+}
+
+
+/***********************************************************************
+ *  Method: database::getPubPolicy
+ *  Params: std::string key
+ * Returns: uint8_t
+ * Effects: 
+ ***********************************************************************/
+uint8_t database::getPubPolicy(std::string key) {
+
+    uint8_t p = PUB_ON_UPDATE;
+
+    if( data.count( key ) == 1 ) {
+        p = data[key]->getPubPolicy( );
+    }
+    return p;
+}
+
+
+/***********************************************************************
+ *  Method: database::setPubPolicy
+ *  Params: std::string key, uint8_t policy
+ * Returns: void
+ * Effects: 
+ ***********************************************************************/
+void database::setPubPolicy(std::string key, uint8_t policy) {
+    if( data.count( key ) == 1 ) {
+        data[key]->setPubPolicy( policy );
+    }
+}
+
+
+/***********************************************************************
+ *  Method: database::getSubscriber
+ *  Params: std::string key
+ * Returns: std::set<void *>
+ * Effects: 
+ ***********************************************************************/
+std::set<void *> *database::getSubscriber(std::string key) {
+    std::set<void *> *s = NULL;
+
+    if( data.count( key ) == 1 ) {
+       s = data[key]->getSubscriber();
+    }
+    return s;
+}
+
+
+/***********************************************************************
+ *  Method: database::database
+ *  Params: 
+ * Effects: 
+ ***********************************************************************/
+database::database()
+{
 }
 
 
@@ -49,66 +82,20 @@ void database::commonInit() {
  ***********************************************************************/
 bool database::add(std::string key, std::string v) {
 
-    bool changed = false;
-    int found=data.count( key );
+    bool flag=false;
 
-    if(found == 0) {
-        std::cout << key <<" not found" << std::endl;
-
-        struct dbValue *tmp  = (struct dbValue *)malloc(sizeof(struct dbValue));
-        memset(tmp,0,sizeof(struct dbValue));
-
-        tmp->value = v ;
-
-        data[ key ] = tmp;
-    } else  {
-        std::cout << key <<" found" << std::endl;
-
-        if  ( data[key]->value == v) {
-            changed = false;
+    if( data.count( key ) == 0 ) {
+        data[key] = new dbValue( v );
+        flag=true;
+    } else {
+        if( v == data[key]->getValue() ) {
+            flag = false;
         } else {
-            data[key]->value = v;
-            changed = true;
+            data[key]->setValue( v ) ;
+            flag=true;
         }
     }
-
-    return changed;
-    
-}
-
-
-/***********************************************************************
- *  Method: database::getPubPolicy
- *  Params: std::string key
- * Returns: uint8_t
- * Effects: 
- ***********************************************************************/
-uint8_t database::getPubPolicy(std::string key) {
-    uint8_t p=PUB_ON_UPDATE;
-
-    int found=data.count( key );
-
-    if(found == 1) {
-        p = data[ key ]->pubPolicy;
-    }
-
-    return p;
-
-}
-/***********************************************************************
- *  Method: database::setPubPolicy
- *  Params: std::string key, uint8_t policy
- * Returns: void
- * Effects: 
- ***********************************************************************/
-void database::setPubPolicy(std::string key, uint8_t policy) {
-
-    int found=data.count( key );
-
-    if(found == 1) {
-        data[ key ]->pubPolicy = policy;
-    }
-
+    return flag;
 }
 
 
@@ -119,15 +106,14 @@ void database::setPubPolicy(std::string key, uint8_t policy) {
  * Effects: 
  ***********************************************************************/
 std::string database::get(std::string key) {
-    std::string d = "";
-    int found=data.count( key );
+    std::string result="<NO DATA>";
 
-    if(found == 1) {
-        d = data[key]->value;
-    } else {
-        d="<NO DATA>";
+    if( data.count( key ) == 1 ) {
+        result = data[key]->getValue();
     }
-    return d;
+
+    return result;
+
 }
 
 
@@ -137,9 +123,11 @@ std::string database::get(std::string key) {
  * Returns: void
  * Effects: 
  ***********************************************************************/
-void
-database::sub(void *id, std::string key)
-{
+void database::sub(void *id, std::string key) {
+
+    if( data.count( key ) == 1 ) {
+        data[key]->addSubscriber( id );
+    }
 }
 
 
@@ -156,13 +144,18 @@ database::unsub(void *id, std::string key)
 
 
 /***********************************************************************
- *  Method: database::getSubscriber
- *  Params: std::string key
- * Returns: std::set<void *>
+ *  Method: database::display
+ *  Params: 
+ * Returns: void
  * Effects: 
  ***********************************************************************/
-std::set<void *>database::getSubscriber(std::string key) {
-    return data[key]->subscriber;
+void database::display() {
+
+    for(std::pair<std::string, dbValue* > element : data ) {
+        std::cout << "Key   : " << element.first << std::endl;
+        data[element.first]->display();
+    }
+
 }
 
 

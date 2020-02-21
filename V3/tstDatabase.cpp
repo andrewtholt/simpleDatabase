@@ -12,11 +12,13 @@ class myDatabase : public database {
 
 void myDatabase::doPublish(std::string key) {
 
-    std::set<void *> ptr = getSubscriber( key) ;
+    const std::set<void *> *ptr = getSubscriber(key); 
 
-    if( ptr.size() > 0 ) {
-        for( auto p : ptr ) {
-            printf("%04x\n", p);
+//    std::set<void *> ptr = getSubscriber( key) ;
+
+    if( ptr->size() > 0 ) {
+        for( auto p : *ptr ) {
+            printf("PUBLISH %04x\n", p);
         }
     }
 }
@@ -63,14 +65,16 @@ int main() {
 
     bool updated;
 
-    cout << "Make policy publish on update" << endl;
-    db.setPubPolicy("TEST", PUB_ON_UPDATE);
-
     updated = db.add("TEST","DATA");
-
     cout << unsigned(tst++) << "  " << updated << endl;
 
-    updated = db.add("TEST","DATA");
+    cout << db.get("TEST") << endl;
+
+
+//    cout << "Make policy publish on update" << endl;
+//    db.setPubPolicy("TEST", PUB_ON_UPDATE);
+
+    updated = db.add("TEST","NEW_DATA");
 
     cout << unsigned(tst++) << "  " << updated << endl;
 
@@ -79,6 +83,11 @@ int main() {
     updated = db.add("TEST","DATA");
 
     cout << unsigned(tst++) << "  " << updated << endl;
+
+    db.sub( (void *)1, "TEST" );
+    updated = db.add("TEST","MORE DATA");
+    db.display();
+    exit(0);
 
     updated = db.add("TEST","MORE DATA");
 
@@ -90,5 +99,14 @@ int main() {
 
     cout << db.get("TEST") << endl;
     cout << db.get("A TEST") << endl;
+
+    db.display();
+
+    db.sub( (void *)1, "TEST" );
+    cout << db.get("TEST") << endl;
+
+    db.display();
+
+
 }
 
