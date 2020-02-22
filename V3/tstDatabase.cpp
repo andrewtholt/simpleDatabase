@@ -13,8 +13,8 @@ class myDatabase : public database {
 
 void myDatabase::act( const void *id, const std::string key, std::string value) {
         printf("PUBLISH ID  : %04x\n", id);
-        printf("       KEY  : %04x\n", key);
-        printf("       VALUE: %04x\n", key);
+        printf("       KEY  : %s\n", key.c_str());
+        printf("       VALUE: %s\n", value.c_str());
 }
 
 void myDatabase::doPublish(std::string key) {
