@@ -98,6 +98,9 @@ class database {
         void unsub(void *id, std::string key);
 
         void display();
+
+       void act(const void *id, const std::string key, const std::string value);
+
 };
 
 #endif

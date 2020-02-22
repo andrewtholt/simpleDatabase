@@ -158,4 +158,9 @@ void database::display() {
 
 }
 
+void database::act( const void *id, const std::string key, const std::string value) {
+}
+
+
+
 

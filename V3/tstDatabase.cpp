@@ -8,17 +8,25 @@ class myDatabase : public database {
         void doPublish(std::string key);
     public:
         bool add(std::string, std::string) ;
+        void act( const void *id, const std::string key, std::string value) ;
 }; 
+
+void myDatabase::act( const void *id, const std::string key, std::string value) {
+        printf("PUBLISH ID  : %04x\n", id);
+        printf("       KEY  : %04x\n", key);
+        printf("       VALUE: %04x\n", key);
+}
 
 void myDatabase::doPublish(std::string key) {
 
     const std::set<void *> *ptr = getSubscriber(key); 
+    const std::string value = get(key);
 
 //    std::set<void *> ptr = getSubscriber( key) ;
 
     if( ptr->size() > 0 ) {
-        for( auto p : *ptr ) {
-            printf("PUBLISH %04x\n", p);
+        for( auto id : *ptr ) {
+            act( id, key, value) ;
         }
     }
 }
