@@ -6,7 +6,7 @@ ARCHIVE_FILE=$(ARCHIVE)/$NAME).tar
 BINS=tst tstSmallDB
 
 CC = cc -g
-GPP = g++ -g
+GPP = g++ -g -fPIC
 
 FLAG=BackUp.txt
 
