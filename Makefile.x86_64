@@ -11,12 +11,15 @@ tst:	tst.o libsdb.so.0.0.1
 #	$(CC) tst.o db.o -o tst
 	$(CC) tst.o -L. -lsdb -o tst
 
-libsdb.so.0.0.1:	db.o
-	gcc -shared -Wl,-soname,libsdb.so -o libsdb.so.0.0.1 db.o -lc
+libsdb.so.0.0.1:	db.o set.o
+	gcc -shared -Wl,-soname,libsdb.so -o libsdb.so.0.0.1 db.o set.o -lc
 	ln -s libsdb.so.0.0.1 libsdb.so
 
 db.o:	db.c db.h
-	$(CC) -c -fPIC $(CFLAGS) db.c -o db.o
+	$(CC) -c $(CFLAGS) db.c -o db.o
+
+set.o:	set.c db.h
+	$(CC) -c $(CFLAGS) set.c -o set.o
 
 tst.o:	tst.c db.h
 	$(CC) -c $(CFLAGS) tst.c -o tst.o
