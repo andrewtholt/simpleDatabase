@@ -31,7 +31,13 @@ int hash( struct database *db, char *s) {
     return (hashval % db->hashsize);
 }
 
-struct nlist   *lookup(char *s, struct database *db) {
+/**
+ * @brief Lookup record
+ * @param s Data element name
+ * @param db databae handle
+ * @return pointer to record.
+ **/
+struct nlist *lookup(char *s, struct database *db) {
     struct nlist   *np;
     int             hashval;
 
@@ -64,11 +70,14 @@ struct nlist   *lookup(char *s, struct database *db) {
     return (NULL);
 }
 
-/*
- * Wild card lookup Return first record with the key field that contains the
- * given string
- */
-
+/**
+ * @brief Lookup a matching record.<br>
+ * Wild card lookup return first record with the key field that contains the
+ * given string.
+ * @param s Data element name
+ * @param db databae handle
+ * @return pointer to record.
+ **/
 struct nlist *wild_key_lookup( char *s, int instance, struct database *db) {
     struct nlist   *np;
     int             i;
@@ -106,7 +115,13 @@ struct nlist *wild_key_lookup( char *s, int instance, struct database *db) {
     return (NULL);
 }
 
-/* similar to wild_key_lookup, but looks in the definition field instaead */
+/**
+ * @brief Lookup a matching record, by its definition.<br>
+ * Similar to wild_key_lookup, but looks in the definition field instead. 
+ * @param s Data element definition.
+ * @param db database handle
+ * @return pointer to record.
+ **/
 
 struct nlist *wild_def_lookup(char *s, int instance, struct database *db) {
     struct nlist   *np;
@@ -140,6 +155,12 @@ struct nlist *wild_def_lookup(char *s, int instance, struct database *db) {
     return (NULL);
 }
 
+/**
+ * @brief Lookup first record with matching definition.<br>
+ * @param s Data element definition.
+ * @param db database handle.
+ * @return pointer to record.
+ **/
 struct nlist *find_first_def( char *s, struct database *db) {
     struct nlist   *np;
     struct nlist   *wild_def_lookup();
@@ -151,6 +172,12 @@ struct nlist *find_first_def( char *s, struct database *db) {
     return (np);
 }
 
+/**
+ * @brief Lookup next record with matching definition.<br>
+ * @param s Data element definition.
+ * @param db database handle.
+ * @return pointer to record.
+ **/
 struct nlist   *find_next_def( char *s, struct database *db) {
     struct nlist   *np;
     struct nlist   *wild_def_lookup();
@@ -162,7 +189,13 @@ struct nlist   *find_next_def( char *s, struct database *db) {
     return (np);
 }
 
-struct nlist   *find_first( char           *s, struct database *db) {
+/**
+ * @brief Lookup first record with matching name.<br>
+ * @param s Data element name
+ * @param db database handle
+ * @return pointer to record.
+ **/
+struct nlist   *find_first( char *s, struct database *db) {
 
     struct nlist   *np= (struct nlist *)NULL;
     struct nlist   *lookup();
@@ -182,6 +215,12 @@ struct nlist   *find_first( char           *s, struct database *db) {
     return (np);
 }
 
+/**
+ * @brief Lookup next record with matching name.<br>
+ * @param s Data element name
+ * @param db database handle
+ * @return pointer to record.
+ **/
 struct nlist   *find_next( char *s, struct database *db) {
     struct nlist   *np;
     struct nlist   *wild_key_lookup();
@@ -201,7 +240,13 @@ char *strsave(char *s) {
     return (p);
 }
 
-
+/**
+ * @brief Delete record
+ * @param name Data element name
+ * @param def Data element value
+ * @param db databae handle
+ * @return pointer to new record.
+ **/
 struct nlist *db_install( char *name, char *def, struct database *db) {
     struct nlist   *np, *lookup();
     struct hash_entry *ent;
@@ -304,6 +349,13 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
     return (np);
 }
 
+/**
+ * @brief Update record.
+ * @param s Data element handle.
+ * @param s New definition.
+ * @param db database handle.
+ * @return void.
+ **/
 void db_update(struct nlist *np, char *def, struct database *db) {
 
     if (db->flags & FIXED) {
@@ -629,7 +681,12 @@ int add_to_free(struct database *db, int count) {
     return(added);
 }			
 
-
+/**
+ * @brief Delete record
+ * @param np record handle
+ * @param db databae handle
+ * @return void.
+ **/
 void db_delete(struct nlist   *np, struct database *db) {
 
     int             hashval;
@@ -681,7 +738,11 @@ void db_delete(struct nlist   *np, struct database *db) {
     }
 }
 
-
+/**
+ * @brief Create empty database
+ * @param hashsize Number of has buckets, or linked lists.
+ * @return db handle.
+ **/
 struct database *db_create(int    hashsize) {
     struct database *table;
     int             i;
