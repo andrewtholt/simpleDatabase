@@ -13,9 +13,7 @@ void setAdd(struct set *p, int n);
 
 bool setContains(const struct set *p, int n);
 
-/*
-void remove(struct set *p, int n);
-*/
+void setRemove(struct set *p, int n);
 
 
 

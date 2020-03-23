@@ -41,10 +41,14 @@ bool setContains(const struct set *p, int n) {
     return c;
 }
 
-/*
-void remove( struct set *p, int n) {
+void setRemove( struct set *p, int n) {
+    for(int i=0; i < p->size;i++) {
+        if( p->data[i] == n ) {
+            p->data[i] = 0;
+            break;
+        }
+    }
 }
-*/
 
 
 

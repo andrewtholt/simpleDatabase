@@ -12,6 +12,7 @@ tst:	tst.o libsdb.so.0.0.1
 	$(CC) tst.o -L. -lsdb -o tst
 
 libsdb.so.0.0.1:	db.o set.o
+	rm -f libsdb.so
 	gcc -shared -Wl,-soname,libsdb.so -o libsdb.so.0.0.1 db.o set.o -lc
 	ln -s libsdb.so.0.0.1 libsdb.so
 
