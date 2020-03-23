@@ -4,6 +4,7 @@
 
 struct set {
     int size;
+    int count;
     int *data;
 };
 
@@ -15,5 +16,6 @@ bool setContains(const struct set *p, int n);
 
 void setRemove(struct set *p, int n);
 
+int setCount(const struct set *p);
 
-
+void setDisplay(const struct set *p);

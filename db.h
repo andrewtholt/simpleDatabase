@@ -20,7 +20,7 @@ struct nlist {
   char name[MAX_NAME];
   char def[MAX_DEF];
 
-  bool published;   // If false don't accept PUB requests, just
+  bool published;   // If false don't accept SUB requests, just
                     // silently ignore them.
   void *subList[MAX_SUB];
 

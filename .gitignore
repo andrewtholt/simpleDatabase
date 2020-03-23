@@ -32,3 +32,4 @@ tstSmallDB
 *.kate-swp
 html
 latex
+*.db

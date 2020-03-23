@@ -241,7 +241,7 @@ char *strsave(char *s) {
 }
 
 /**
- * @brief Delete record
+ * @brief Add  record
  * @param name Data element name
  * @param def Data element value
  * @param db databae handle
@@ -262,8 +262,9 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
 
         if (!db->hash_table[hashval]) {
             ent = (struct hash_entry *) malloc(sizeof(*ent));
-            if (!ent)
+            if (!ent) {
                 return (NULL);
+            }
 
             ent->hash_head = 0;
             ent->ref_count = 0;
@@ -272,14 +273,14 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
         }
 
         if ((db->flags & FIXED) && (db->free_rec_list != 0)) {
-
             np = db->free_rec_list;
             db->free_rec_list = np->next;
             db->free_rec_count--;
         } else {
             np = (struct nlist *) malloc(sizeof(*np));
-            if (np == NULL)
+            if (np == NULL) {
                 return (NULL);
+            }
         }
         memset(np,0,sizeof(np));
 
