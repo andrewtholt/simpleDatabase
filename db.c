@@ -365,33 +365,27 @@ void nlist_sub(int id) {
  **/
 void db_update(struct nlist *np, char *def, struct database *db) {
 
-    if (db->flags & FIXED) {
-        (void) memset(np->def, (int) 0, (size_t) db->def_size);
-        //        (void)memset(np->def, (int) ' ', db->def_size);
-        // TODO Replace with memcpy
-        strncpy(np->def, def, strlen(def));
-    } else {
-        // TODO: Q: How can I tell the length of structure specified by a void * ?
-        // A: you can't.  So variable length definitions can only store strings
-        // Unless a pass in the length.
-        // 12 November 2016.  Changing to fixed allocations to head off
-        // memory fragmentation on an embedded system.
+    bool changed = false;
+
+    changed = (!strcmp(np->def, def)) ? false : true ;
+
+    if(changed == true) {
+        if (db->flags & FIXED) {
+            (void) memset(np->def, (int) 0, (size_t) db->def_size);
+            strncpy(np->def, def, strlen(def));
+        } else {
+            (void)strncpy(np->def,def,sizeof(np->def));
+        }
         //
-        (void)strncpy(np->def,def,sizeof(np->def));
-        /*
-           if (strlen(np->def) <= strlen(def)) {
-           strcpy(np->def, def);
-           } else {
-           np->def = (char *) realloc(np->def,strlen(def));
-           if (np->def)
-           strcpy(np->def, def);
-           }
-           */
+        // TODO callback to update subscribers here
+        //
     }
-    if (db->flags & STAMP)
+
+    if (db->flags & STAMP) {
         np->updateTime = time(NULL);
-    else
+    } else {
         np->updateTime = 0;
+    }
 }
 
 
@@ -487,7 +481,7 @@ void debug_dump(struct database *db) {
     int             i;
     struct nlist   *np;
 
-//    char scratch_buffer[MAX_REC_SIZE];
+    //    char scratch_buffer[MAX_REC_SIZE];
 
     db_status(db);
 
@@ -502,12 +496,12 @@ void debug_dump(struct database *db) {
             np = db->hash_table[i]->hash_head;
 
             do {
-//                fixed_width_print(np->name, db->name_size);
-//                printf("\tName\t\t:%s:\n", scratch_buffer);
+                //                fixed_width_print(np->name, db->name_size);
+                //                printf("\tName\t\t:%s:\n", scratch_buffer);
                 printf("\tName\t\t:%s:\n", np->name);
 
-//                fixed_width_print(np->def, db->def_size);
-//                printf("\tDefinition\t:%s:\n", scratch_buffer);
+                //                fixed_width_print(np->def, db->def_size);
+                //                printf("\tDefinition\t:%s:\n", scratch_buffer);
                 printf("\tDefinition\t:%s:\n", np->def);
 
                 printf("\tPublished\t:");

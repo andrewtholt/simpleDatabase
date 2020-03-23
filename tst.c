@@ -67,6 +67,7 @@ int main() {
     if(np) {
 //        bucket_stats(table);
         db_update(np,(char *)"Changed",table);       
+        db_update(np,(char *)"Changed",table);       
         /*
            db_delete(np,table);
            */
