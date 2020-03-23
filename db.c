@@ -376,9 +376,19 @@ void db_update(struct nlist *np, char *def, struct database *db) {
         } else {
             (void)strncpy(np->def,def,sizeof(np->def));
         }
-        //
-        // TODO callback to update subscribers here
-        //
+
+        if( np->published == true) {
+            printf("PUBLISH\n");
+
+            for(int i=0; i < (np->subSet->size); i++) {
+                if( np->subSet->data[i] > 0) {
+                //
+                // TODO callback to update subscribers here
+                //
+                    printf("\t%10s:%10s: notify:%4d\n",np->name, np->def,np->subSet->data[i]);
+                }
+            }
+        }
     }
 
     if (db->flags & STAMP) {

@@ -61,6 +61,7 @@ int main() {
 
     db_publish("ANDREW",true, table);
     db_subscribe("ANDREW", 1, table);
+    db_subscribe("ANDREW", 2, table);
 
     print_record(np);
 
