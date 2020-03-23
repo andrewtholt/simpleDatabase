@@ -8,7 +8,6 @@ FLAG=BackUp.txt
 
 all:	tst libsdb.so.0.0.1
 tst:	tst.o libsdb.so.0.0.1
-#	$(CC) tst.o db.o -o tst
 	$(CC) tst.o -L. -lsdb -o tst
 
 libsdb.so.0.0.1:	db.o set.o

@@ -59,6 +59,9 @@ int main() {
     printf("\nPerforming lookup ...\n");
     np=find_first("ANDREW",table);
 
+    db_publish("ANDREW",true, table);
+    db_subscribe("ANDREW", 1, table);
+
     print_record(np);
 
     if(np) {
@@ -85,7 +88,7 @@ int main() {
 
     db_dump(fp,table);
     db_dump(stdout,table);
-    //    debug_dump(table);
+    debug_dump(table);
     //	bucket_stats(table);
 }
 

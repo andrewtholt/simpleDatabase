@@ -22,8 +22,9 @@ struct nlist {
 
   bool published;   // If false don't accept SUB requests, just
                     // silently ignore them.
-  void *subList[MAX_SUB];
+//  void *subList[MAX_SUB];
 
+  struct set *subSet;
   time_t ttl;       // If this, plus update time is greater than the time now ...
                     // set def = "NO_DATA"
 
@@ -95,12 +96,17 @@ struct database *db_create(int);
 struct nlist *db_install( char *name, char *def, struct database *db);
 struct nlist *install();
 /* Retrieve */
-struct nlist *find_first(char *, struct database *);
+struct nlist *find_first(const char *, struct database *);
 struct nlist *find_next();
-struct nlist *find_first_def();
+struct nlist *find_first_def(const char *s, struct database *db);
 struct nlist *find_next_def();
 struct nlist *find_first_def();
 struct nlist *find_first_def();
+struct nlist *wild_def_lookup(const char *s, int instance, struct database *db);
+
+struct nlist *lookup(const char *s, struct database *db) ;
+
+void nlist_sub(int id);
 
 /* Delete */
 // void delete();
@@ -114,6 +120,9 @@ void debug_dump(struct database *);
 void bucket_stat();
 int  db_load(char *, struct database *);
 void db_status( struct database *);
+void db_subscribe(const char *key, const int id,  struct database *db);
+
+void db_publish(const char *key, bool state, struct database *db);
 
 void db_set_key_len();
 void db_set_def_len();

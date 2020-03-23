@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "db.h"
+#include "set.h"
 
 /*
  * static struct nlist *hashtab[HASHSIZE];
@@ -21,7 +22,7 @@ static struct nlist *last_np = NULL;
 
 void            pre_allocate_records();
 
-int hash( struct database *db, char *s) {
+int hash( struct database *db, const char *s) {
     int             hashval;
 
     for (hashval = 0; *s != '\0';) {
@@ -37,7 +38,7 @@ int hash( struct database *db, char *s) {
  * @param db databae handle
  * @return pointer to record.
  **/
-struct nlist *lookup(char *s, struct database *db) {
+struct nlist *lookup(const char *s, struct database *db) {
     struct nlist   *np;
     int             hashval;
 
@@ -78,7 +79,7 @@ struct nlist *lookup(char *s, struct database *db) {
  * @param db databae handle
  * @return pointer to record.
  **/
-struct nlist *wild_key_lookup( char *s, int instance, struct database *db) {
+struct nlist *wild_key_lookup(const char *s, int instance, struct database *db) {
     struct nlist   *np;
     int             i;
     char           *tmp;
@@ -123,7 +124,7 @@ struct nlist *wild_key_lookup( char *s, int instance, struct database *db) {
  * @return pointer to record.
  **/
 
-struct nlist *wild_def_lookup(char *s, int instance, struct database *db) {
+struct nlist *wild_def_lookup(const char *s, int instance, struct database *db) {
     struct nlist   *np;
     char           *tmp;
     int             i;
@@ -161,7 +162,7 @@ struct nlist *wild_def_lookup(char *s, int instance, struct database *db) {
  * @param db database handle.
  * @return pointer to record.
  **/
-struct nlist *find_first_def( char *s, struct database *db) {
+struct nlist *find_first_def( const char *s, struct database *db) {
     struct nlist   *np;
     struct nlist   *wild_def_lookup();
     extern int      record_count;
@@ -195,7 +196,7 @@ struct nlist   *find_next_def( char *s, struct database *db) {
  * @param db database handle
  * @return pointer to record.
  **/
-struct nlist   *find_first( char *s, struct database *db) {
+struct nlist   *find_first( const char *s, struct database *db) {
 
     struct nlist   *np= (struct nlist *)NULL;
     struct nlist   *lookup();
@@ -319,6 +320,8 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
                 } else {
                     np->updateTime = 0;
                 }
+
+                np->subSet = setNew(MAX_SUB);
             }
         } else {
             (void)strncpy(np->name,name,sizeof(np->name));
@@ -348,6 +351,9 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
         (void)strncpy(np->def, def, sizeof(np->def));
     }
     return (np);
+}
+
+void nlist_sub(int id) {
 }
 
 /**
@@ -481,7 +487,7 @@ void debug_dump(struct database *db) {
     int             i;
     struct nlist   *np;
 
-    char scratch_buffer[MAX_REC_SIZE];
+//    char scratch_buffer[MAX_REC_SIZE];
 
     db_status(db);
 
@@ -496,11 +502,22 @@ void debug_dump(struct database *db) {
             np = db->hash_table[i]->hash_head;
 
             do {
-                fixed_width_print(np->name, db->name_size);
-                printf("\tName\t\t:%s:\n", scratch_buffer);
+//                fixed_width_print(np->name, db->name_size);
+//                printf("\tName\t\t:%s:\n", scratch_buffer);
+                printf("\tName\t\t:%s:\n", np->name);
 
-                fixed_width_print(np->def, db->def_size);
-                printf("\tDefinition\t:%s:\n", scratch_buffer);
+//                fixed_width_print(np->def, db->def_size);
+//                printf("\tDefinition\t:%s:\n", scratch_buffer);
+                printf("\tDefinition\t:%s:\n", np->def);
+
+                printf("\tPublished\t:");
+                if( np->published == true ) {
+                    printf("YES\n");
+                } else {
+                    printf("NO \n");
+                }
+
+                setDisplay( np->subSet );
                 printf("\tBucket Number\t:%d\n", np->bucket_number);
                 printf("\n");
                 np = np->next;
@@ -768,6 +785,22 @@ struct database *db_create(int    hashsize) {
         }
     }
     return (table);
+}
+
+void db_publish(const char *key, bool state, struct database *db) {
+    struct nlist *np = find_first( key, db) ;
+
+    if( np != NULL ) {
+        np->published = state;
+    }
+}
+
+void db_subscribe(const char *key, const int id, struct database *db) {
+    struct nlist *np = find_first( key, db) ;
+
+    if( np != NULL ) {
+        setAdd(np->subSet, id);
+    }
 }
 
 void db_set_key_len(int len, struct database *db) {
