@@ -290,8 +290,8 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
 
         np->bucket_number = hashval;
 
-        if (db->flags & FIXED) {
-            if (!(db->flags & (FIXED_DB_SIZE | NEVER_SHRINK))) {
+//        if (db->flags & FIXED) {
+//            if (!(db->flags & (FIXED_DB_SIZE | NEVER_SHRINK))) {
                 int             name_len;
                 int             def_len;
 
@@ -318,19 +318,19 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
 
                 np->subSet = setNew(MAX_SUB);
                 np->cb_ptr = NULL;
-            }
-        } else {
-            (void)strncpy(np->name,name,sizeof(np->name));
-            (void)strncpy(np->def,def,sizeof(np->def));
-            db->hash_table[hashval]->ref_count++;
-            return (np);
-            /*
-               if (((np->name = strsave(name)) == NULL) && ((np->def = strsave(def)) == NULL)) {
-               db->hash_table[hashval]->ref_count++;
-               return (NULL);
-               }
-               */
-        }
+//            }
+//        } else {
+//            (void)strncpy(np->name,name,sizeof(np->name));
+//            (void)strncpy(np->def,def,sizeof(np->def));
+//            db->hash_table[hashval]->ref_count++;
+//            return (np);
+//            /*
+//               if (((np->name = strsave(name)) == NULL) && ((np->def = strsave(def)) == NULL)) {
+//               db->hash_table[hashval]->ref_count++;
+//               return (NULL);
+//               }
+//               */
+//        }
         /* hashval = hash(np->name); */
         np->next = db->hash_table[hashval]->hash_head;
         db->hash_table[hashval]->hash_head = np;

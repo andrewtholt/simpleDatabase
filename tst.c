@@ -11,6 +11,7 @@
 
 void            print_record();
 
+/*
 void updateCallback(char *key, char *value, int id) {
     printf("Over ridden\n");
 
@@ -18,6 +19,7 @@ void updateCallback(char *key, char *value, int id) {
     printf("Value      :%s\n", value);
     printf("Destination:%d\n", id);
 }
+*/
 
 int main() {
     struct nlist   *lookup();
@@ -68,6 +70,7 @@ int main() {
 
     printf("\nPerforming lookup ...\n");
     np=find_first("ANDREW",table);
+    db_dump(stdout,table);
 
     db_publish("ANDREW",true, table);
     db_subscribe("ANDREW", 1, table);
