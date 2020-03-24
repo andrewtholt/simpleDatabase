@@ -292,14 +292,6 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
 
         if (db->flags & FIXED) {
             if (!(db->flags & (FIXED_DB_SIZE | NEVER_SHRINK))) {
-                /*
-                   np->name = (char *) malloc(db->name_size);
-                   np->def = (char *) malloc(db->def_size);
-                   bzero(np->name, db->name_size);
-                   bzero(np->def, db->def_size);
-                   */
-            }
-            {
                 int             name_len;
                 int             def_len;
 
@@ -325,6 +317,7 @@ struct nlist *db_install( char *name, char *def, struct database *db) {
                 }
 
                 np->subSet = setNew(MAX_SUB);
+                np->cb_ptr = NULL;
             }
         } else {
             (void)strncpy(np->name,name,sizeof(np->name));
