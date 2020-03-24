@@ -30,6 +30,11 @@ struct nlist {
 
   int bucket_number;
   time_t updateTime;
+  //
+  // If cb_ptr is NULL then the weak defined 'updateCallback' function is called.
+  // Otherwise this.  This allows for a callbackfor a specific data item.
+  //
+  void (*cb_ptr)(char *key, char *value, int id);
   
   bool dontSave;        // If true dump wont output this.
   bool readOnly;        // If true then can't write.
