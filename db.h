@@ -130,5 +130,8 @@ void db_set_def_len();
 int db_get_key_len();
 int db_get_def_len();
 
+#pragma weak updateCallback
+void updateCallback(char *key, char *value, int id);
+
 #endif
 

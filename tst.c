@@ -6,9 +6,19 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "db.h"
-void            print_record();
 
 #define DEBUG
+
+void            print_record();
+
+void updateCallback(char *key, char *value, int id) {
+    printf("Over ridden\n");
+
+    printf("Key        :%s\n", key);
+    printf("Value      :%s\n", value);
+    printf("Destination:%d\n", id);
+}
+
 int main() {
     struct nlist   *lookup();
     struct nlist   *install();

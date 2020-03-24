@@ -8,6 +8,9 @@
 #include "db.h"
 #include "set.h"
 
+void updateCallback(char *key, char *value,int id) {
+    printf("Over load me\n");
+}
 /*
  * static struct nlist *hashtab[HASHSIZE];
  *
@@ -386,6 +389,7 @@ void db_update(struct nlist *np, char *def, struct database *db) {
                 // TODO callback to update subscribers here
                 //
                     printf("\t%10s:%10s: notify:%4d\n",np->name, np->def,np->subSet->data[i]);
+                    updateCallback(np->name, np->def,np->subSet->data[i]);
                 }
             }
         }
