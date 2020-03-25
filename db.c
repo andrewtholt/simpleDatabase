@@ -18,7 +18,7 @@ void updateCallback(char *key, char *value,int id) {
  static struct hash_entry **hashtab;
  */
 
-static int      HASHSIZE = 100;
+// static int      HASHSIZE = 100;
 static int      record_count = 1;
 static int      bucket = -1;
 static struct nlist *last_np = NULL;
@@ -91,7 +91,7 @@ struct nlist *wild_key_lookup(const char *s, int instance, struct database *db) 
         bucket = 0;
     }
 
-    for (i = bucket; i < HASHSIZE; i++) {
+    for (i = bucket; i < db->hashsize ; i++) {
 
         if (db->hash_table[i]) {
 
@@ -137,7 +137,7 @@ struct nlist *wild_def_lookup(const char *s, int instance, struct database *db) 
         bucket = 0;
     }
 
-    for (i = bucket; i < HASHSIZE; i++) {
+    for (i = bucket; i < db->hashsize; i++) {
 
         if (db->hash_table[i]) {
             np = db->hash_table[i]->hash_head;
@@ -781,7 +781,9 @@ struct database *db_create(int    hashsize) {
 
     if (table) {
         table->hashsize = hashsize;
-        table->flags    = 56;
+//        table->flags    = 0x39;
+        table->flags    = MATCH|STAMP|NEVER_SHRINK|FIXED;
+        printf("flags= 0x%02x\n", table->flags);
 
         table->name_size = MAX_NAME;
         table->def_size = MAX_DEF;

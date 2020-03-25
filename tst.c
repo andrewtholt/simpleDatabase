@@ -64,7 +64,6 @@ int main() {
     printf("max records %d\n", table->max_num_records);
 
     printf("\nLoaded data ...\n");
-    db_status(table);
 
     printf("\nPerforming lookup ...\n");
     np=find_first("CRAP",table);
@@ -83,6 +82,7 @@ int main() {
 //        bucket_stats(table);
         db_update("ANDREW", (char *)"Changed",table);       
         db_update("ANDREW", (char *)"Changed",table);       
+        db_status(table);
         /*
            db_delete(np,table);
            */

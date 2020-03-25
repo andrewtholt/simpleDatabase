@@ -9,6 +9,16 @@
 #define MAX_DEF  32
 #define MAX_SUB   8
 
+
+/* Database properties held in flags */
+
+#define FIXED         0x01
+#define DUPLICATE     0x02
+#define FIXED_DB_SIZE 0x04
+#define NEVER_SHRINK  0x08
+#define STAMP         0x10
+#define MATCH         0x20 // find must be a perfect match
+
 enum cbTypeList {
     CB_INVALID=0,   // Invalid, ignore callback pointer
     CB_FPTR,        // callback pointer is a C function ptr
@@ -48,15 +58,6 @@ struct hash_entry {
   int ref_count;
   int rec_count;
 };
-
-/* Database properties held in flags */
-
-#define FIXED         0x01
-#define DUPLICATE     0x02
-#define FIXED_DB_SIZE 0x04
-#define NEVER_SHRINK  0x08
-#define STAMP         0x10
-#define MATCH         0x20 // find must be a perfect match
 
 struct database {
   struct hash_entry **hash_table;
