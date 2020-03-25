@@ -44,6 +44,7 @@ int main() {
         fprintf(stderr,"Fatal Error: failed to create database\n");
         exit(1);
     }
+    db_update("1000","NEW TEST",table);
 
     //	db_setattr(table,FIXED|NEVER_SHRINK|STAMP,0,10,10);
 
@@ -80,14 +81,15 @@ int main() {
 
     if(np) {
 //        bucket_stats(table);
-        db_update(np,(char *)"Changed",table);       
-        db_update(np,(char *)"Changed",table);       
+        db_update("ANDREW", (char *)"Changed",table);       
+        db_update("ANDREW", (char *)"Changed",table);       
         /*
            db_delete(np,table);
            */
     }
     db_status(table);
-    np=db_install("1000","NEW TEST",table);
+
+//    np=db_install("1000","NEW TEST",table);
 
     /*
     db_status(table);

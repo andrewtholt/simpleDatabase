@@ -98,7 +98,7 @@ So here are mine */
 /* Create & update */
 struct database *db_create(int);
 
-struct nlist *db_install( char *name, char *def, struct database *db);
+struct nlist *db_install(const char *name, const char *def, struct database *db);
 struct nlist *install();
 /* Retrieve */
 struct nlist *find_first(const char *, struct database *);
@@ -118,7 +118,8 @@ void nlist_sub(int id);
 
 /* Utilities */
 // Update
-void db_update(struct nlist *, char *, struct database *);
+// void db_update(struct nlist *, char *, struct database *);
+void db_update(const char *key, const char *value, struct database *db);
 void db_setattr(struct database *, int, int , int , int);
 void db_dump();
 void debug_dump(struct database *);

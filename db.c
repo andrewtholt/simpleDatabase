@@ -251,7 +251,7 @@ char *strsave(char *s) {
  * @param db databae handle
  * @return pointer to new record.
  **/
-struct nlist *db_install( char *name, char *def, struct database *db) {
+struct nlist *db_install( const char *name,const char *def, struct database *db) {
     struct nlist   *np, *lookup();
     struct hash_entry *ent;
 
@@ -359,9 +359,20 @@ void nlist_sub(int id) {
  * @param db database handle.
  * @return void.
  **/
-void db_update(struct nlist *np, char *def, struct database *db) {
+// void db_update(struct nlist *np, char *def, struct database *db) {
+void db_update(const char *key, const char *def, struct database *db) {
 
     bool changed = false;
+
+    struct nlist *np = find_first(key,db);
+
+    // 
+    // Doesn't exist, so create and retrn
+    //
+    if(np == NULL) {
+        db_install(key,def,db);
+        return;
+    }
 
     changed = (!strcmp(np->def, def)) ? false : true ;
 
@@ -374,14 +385,14 @@ void db_update(struct nlist *np, char *def, struct database *db) {
         }
 
         if( np->published == true) {
-            printf("PUBLISH\n");
+//            printf("PUBLISH\n");
 
             for(int i=0; i < (np->subSet->size); i++) {
                 if( np->subSet->data[i] > 0) {
                 //
                 // TODO callback to update subscribers here
                 //
-                    printf("\t%10s:%10s: notify:%4d\n",np->name, np->def,np->subSet->data[i]);
+//                    printf("\t%10s:%10s: notify:%4d\n",np->name, np->def,np->subSet->data[i]);
                     updateCallback(np->name, np->def,np->subSet->data[i]);
                 }
             }
@@ -396,7 +407,7 @@ void db_update(struct nlist *np, char *def, struct database *db) {
 }
 
 
-void db_dump( FILE           *fp, struct database *db) {
+void db_dump( FILE *fp, struct database *db) {
     int             i;
     struct nlist   *np;
 
@@ -770,6 +781,8 @@ struct database *db_create(int    hashsize) {
 
     if (table) {
         table->hashsize = hashsize;
+        table->flags    = 56;
+
         table->name_size = MAX_NAME;
         table->def_size = MAX_DEF;
         table->free_rec_list = (struct nlist *) NULL;
