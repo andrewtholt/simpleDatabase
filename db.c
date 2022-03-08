@@ -407,9 +407,17 @@ void db_update(const char *key, const char *def, struct database *db) {
 }
 
 
-void db_dump( FILE *fp, struct database *db) {
+// void db_dump( FILE *fp, struct database *db) {
+void db_dump( char *fname, struct database *db) {
     int             i;
     struct nlist   *np;
+
+    FILE *fp = fopen(fname,"w");
+
+    if( fp == NULL ) {
+        fprintf(stderr, "Failed to open %s\n",fname);
+        return;
+    }
 
     fprintf(fp, "# flags:name_size:def_size:number_of_records\n");
     fprintf(fp, "%d:%d:%d:%d\n", db->flags, db->name_size, db->def_size, db->max_num_records);
@@ -426,7 +434,7 @@ void db_dump( FILE *fp, struct database *db) {
 
         }
     }
-
+    fclose( fp );
 }
 
 int db_count_records(struct database *db) {

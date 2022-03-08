@@ -70,7 +70,7 @@ int main() {
 
     printf("\nPerforming lookup ...\n");
     np=find_first("ANDREW",table);
-    db_dump(stdout,table);
+    db_dump("/dev/tty",table);
 
     db_publish("ANDREW",true, table);
     db_subscribe("ANDREW", 1, table);
@@ -99,12 +99,12 @@ int main() {
     */
     db_status(table);
 
-    fp=fopen("tst1.db","w");
+//    fp=fopen("tst1.db","w");
 
     // fp=stdout;
 
-    db_dump(fp,table);
-    db_dump(stdout,table);
+    db_dump("tst1.db",table);
+    db_dump("/dev/tty",table);
     debug_dump(table);
     //	bucket_stats(table);
 }
